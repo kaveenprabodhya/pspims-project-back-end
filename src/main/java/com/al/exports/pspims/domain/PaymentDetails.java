@@ -1,4 +1,13 @@
 package com.al.exports.pspims.domain;
 
-public class PaymentDetails {
+import jakarta.persistence.Entity;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@Entity
+public class PaymentDetails extends BaseEntity {
 }
