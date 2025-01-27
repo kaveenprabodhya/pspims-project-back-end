@@ -5,19 +5,18 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import lombok.*;
 
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
-public class BeverageProdOrder extends BaseEntity {
+public class SupplierPaymentDetails extends BaseEntity {
 
-    // one bPO hv one pOD
+    // one sp hv one sPD
     @OneToOne
-    private ProdOrderDetails prodOrderDetails;
-    // one bevType hv many bevPO
+    private PaymentDetails paymentDetails;
+    // many payments for one supplier
     @ManyToOne
-    private BeverageType beverageType;
+    private Supplier supplier;
 }

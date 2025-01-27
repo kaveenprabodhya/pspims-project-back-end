@@ -1,4 +1,4 @@
 package com.al.exports.pspims.domain;
 
-public enum ShippingStatus {
+public enum CoconutQualityGradeEnum {
 }

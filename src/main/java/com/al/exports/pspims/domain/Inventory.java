@@ -1,30 +1,26 @@
 package com.al.exports.pspims.domain;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.OneToMany;
+import lombok.*;
 
-import java.sql.Timestamp;
-import java.util.UUID;
+import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class Inventory extends BaseEntity {
 
-    @Builder
-    public Inventory(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate, Float minimumStockLevel,
-                     Float maximumStockLevel, Float inventoryQuantity) {
-        super(id, version, createdDate, lastModifiedDate);
-        this.minimumStockLevel = minimumStockLevel;
-        this.maximumStockLevel = maximumStockLevel;
-        this.inventoryQuantity = inventoryQuantity;
-    }
-
+    private InventoryItemTypeEnum inventoryItemType;
     private Float inventoryQuantity;
     private Float minimumStockLevel;
     private Float maximumStockLevel;
+
+    // one inventory many coco purchase
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "inventory")
+    private Set<CoconutPurchase> coconutPurchase;
 }
