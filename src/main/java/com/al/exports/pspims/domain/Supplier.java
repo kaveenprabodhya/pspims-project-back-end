@@ -1,5 +1,7 @@
 package com.al.exports.pspims.domain;
 
+import com.al.exports.pspims.shared.enums.SupplierPaymentTermsEnum;
+import com.al.exports.pspims.shared.enums.SupplierStatusEnum;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;

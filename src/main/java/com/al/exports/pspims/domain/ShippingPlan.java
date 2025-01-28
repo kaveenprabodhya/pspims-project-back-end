@@ -1,5 +1,8 @@
 package com.al.exports.pspims.domain;
 
+import com.al.exports.pspims.shared.enums.DeliveryTypeEnum;
+import com.al.exports.pspims.shared.enums.ShippingStatusEnum;
+import com.al.exports.pspims.shared.enums.ShippingTypeEnum;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import lombok.*;

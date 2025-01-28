@@ -1,5 +1,6 @@
 package com.al.exports.pspims.domain;
 
+import com.al.exports.pspims.shared.enums.CustomerType;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;

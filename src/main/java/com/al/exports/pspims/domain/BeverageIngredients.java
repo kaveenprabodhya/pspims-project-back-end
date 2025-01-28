@@ -1,10 +1,8 @@
 package com.al.exports.pspims.domain;
 
+import com.al.exports.pspims.shared.enums.IngredientMeasureEnum;
 import jakarta.persistence.Entity;
 import lombok.*;
-
-import java.sql.Timestamp;
-import java.util.UUID;
 
 @Setter
 @Getter

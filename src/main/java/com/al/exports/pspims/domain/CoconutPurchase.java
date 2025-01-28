@@ -1,5 +1,6 @@
 package com.al.exports.pspims.domain;
 
+import com.al.exports.pspims.shared.enums.CoconutQualityGradeEnum;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import lombok.*;

@@ -1,5 +1,7 @@
 package com.al.exports.pspims.domain;
 
+import com.al.exports.pspims.shared.enums.ProdStatusEnum;
+import com.al.exports.pspims.shared.enums.ProductionQuantityMeasureEnum;
 import jakarta.persistence.Entity;
 import lombok.*;
 
