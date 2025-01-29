@@ -1,29 +1,37 @@
 package com.al.exports.pspims.services;
 
-import com.al.exports.pspims.domain.Supplier;
 
-import java.util.Set;
+import com.al.exports.pspims.shared.model.SupplierDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.UUID;
 
 public class SupplierServiceImpl implements SupplierService {
-    @Override
-    public Set<Supplier> findAll() {
-        return Set.of();
-    }
 
     @Override
-    public Supplier findById(UUID uuid) {
+    public Page<SupplierDTO> findAll(Pageable pageable) {
         return null;
     }
 
     @Override
-    public Supplier save(Supplier object) {
+    public SupplierDTO findById(UUID uuid) {
         return null;
     }
 
     @Override
-    public void delete(Supplier object) {
+    public SupplierDTO create(SupplierDTO object) {
+        return null;
+    }
 
+    @Override
+    public SupplierDTO update(UUID id, SupplierDTO object) {
+        return null;
+    }
+
+    @Override
+    public SupplierDTO patch(UUID id, SupplierDTO object) {
+        return null;
     }
 
     @Override

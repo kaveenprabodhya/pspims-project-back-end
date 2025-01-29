@@ -13,6 +13,6 @@ import lombok.*;
 public class BeverageIngredients extends BaseEntity {
 
     private String ingredientName;
-    private float measureAmount;
+    private Float measureAmount;
     private IngredientMeasureEnum ingredientMeasure;
 }

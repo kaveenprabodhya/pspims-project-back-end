@@ -13,7 +13,7 @@ public class BeverageTypeDTO extends BaseItem {
 
     private String beverageName;
     private String beverageDescription;
-    private boolean isActive;
+    private Boolean isActive;
     private String nutritionInfo;
     private BeverageIngredientsDTO beverageIngredients;
     private Set<BeverageProdOrderDTO> beverageProdOrder;

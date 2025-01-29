@@ -16,8 +16,8 @@ import java.util.Date;
 public class CoconutPurchase extends BaseEntity {
 
     private Integer purchaseQuantity;
-    private float pricePerUnit;
-    private float totalPurchaseCost;
+    private Float pricePerUnit;
+    private Float totalPurchaseCost;
     private Date purchaseDate;
     private CoconutQualityGradeEnum coconutQualityGrade;
     // one inventory to many

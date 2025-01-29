@@ -1,8 +1,8 @@
 package com.al.exports.pspims.services;
 
-import com.al.exports.pspims.domain.CopraSale;
+import com.al.exports.pspims.shared.model.CopraSaleDTO;
 
 import java.util.UUID;
 
-public interface CopraSaleService extends CrudService<CopraSale, UUID> {
+public interface CopraSaleService extends CrudService<CopraSaleDTO, UUID> {
 }

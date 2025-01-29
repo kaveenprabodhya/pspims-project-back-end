@@ -13,7 +13,7 @@ import java.util.Date;
 public class OrderDTO extends BaseItem {
 
     private Date orderDate;
-    private float totalOrderAmount;
+    private Float totalOrderAmount;
     private OrderStatusEnum orderStatus;
     private CoconutWaterProdOrderDTO coconutWaterProdOrder;
     private VinegarProdOrderDTO vinegarProdOrder;

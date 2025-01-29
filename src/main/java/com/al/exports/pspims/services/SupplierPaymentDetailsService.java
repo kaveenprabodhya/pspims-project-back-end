@@ -1,8 +1,8 @@
 package com.al.exports.pspims.services;
 
-import com.al.exports.pspims.domain.SupplierPaymentDetails;
+import com.al.exports.pspims.shared.model.SupplierPaymentDetailsDTO;
 
 import java.util.UUID;
 
-public interface SupplierPaymentDetailsService extends CrudService<SupplierPaymentDetails, UUID> {
+public interface SupplierPaymentDetailsService extends CrudService<SupplierPaymentDetailsDTO, UUID> {
 }

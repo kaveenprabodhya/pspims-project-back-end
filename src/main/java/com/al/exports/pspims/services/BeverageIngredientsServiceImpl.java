@@ -1,33 +1,86 @@
 package com.al.exports.pspims.services;
 
 import com.al.exports.pspims.domain.BeverageIngredients;
+import com.al.exports.pspims.repository.BeverageIngredientsRepository;
+import com.al.exports.pspims.shared.exceptions.ResourceNotFoundException;
+import com.al.exports.pspims.shared.mapper.BeverageIngredientsMapper;
+import com.al.exports.pspims.shared.model.BeverageIngredientsDTO;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Set;
+import java.util.Optional;
 import java.util.UUID;
 
+@RequiredArgsConstructor
+@Service
 public class BeverageIngredientsServiceImpl implements BeverageIngredientsService {
+
+    private final BeverageIngredientsRepository beverageIngredientsRepository;
+    private final BeverageIngredientsMapper beverageIngredientsMapper;
+
     @Override
-    public Set<BeverageIngredients> findAll() {
-        return Set.of();
+    public Page<BeverageIngredientsDTO> findAll(Pageable pageable) {
+        Page<BeverageIngredients> beverageIngredients = beverageIngredientsRepository.findAll(pageable);
+        return beverageIngredients.
+                map(beverageIngredientsMapper::beverageIngredientsToBeverageIngredientsDTO);
     }
 
     @Override
-    public BeverageIngredients findById(UUID uuid) {
-        return null;
+    public BeverageIngredientsDTO findById(UUID uuid) {
+        return beverageIngredientsRepository
+                .findById(uuid)
+                .map(beverageIngredientsMapper::beverageIngredientsToBeverageIngredientsDTO)
+                .orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override
-    public BeverageIngredients save(BeverageIngredients object) {
-        return null;
+    public BeverageIngredientsDTO create(BeverageIngredientsDTO beverageIngredientsDTO) {
+        return saveAndReturnDTO(beverageIngredientsMapper.beverageIngredientsDtoToBeverageIngredients(beverageIngredientsDTO));
     }
 
     @Override
-    public void delete(BeverageIngredients object) {
+    public BeverageIngredientsDTO update(UUID id, BeverageIngredientsDTO beverageIngredientsDTO) {
+        Optional<BeverageIngredients> existingBeverageIngredient = beverageIngredientsRepository.findById(id);
+        if(existingBeverageIngredient.isPresent()) {
+            BeverageIngredients beverageIngredients = existingBeverageIngredient.get();
+            beverageIngredients.setIngredientName(beverageIngredientsDTO.getIngredientName());
+            beverageIngredients.setIngredientMeasure(beverageIngredientsDTO.getIngredientMeasure());
+            beverageIngredients.setMeasureAmount(beverageIngredientsDTO.getMeasureAmount());
+            return saveAndReturnDTO(beverageIngredients);
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found. UUID: " + id);
+        }
+    }
 
+    @Override
+    public BeverageIngredientsDTO patch(UUID id, BeverageIngredientsDTO beverageIngredientsDTO) {
+        return beverageIngredientsRepository.findById(id)
+                .map(beverageIngredients -> {
+                    if(beverageIngredientsDTO.getIngredientName() != null){
+                        beverageIngredients.setIngredientName(beverageIngredientsDTO.getIngredientName());
+                    }
+                    if(beverageIngredientsDTO.getIngredientMeasure() != null){
+                        beverageIngredients.setIngredientMeasure(beverageIngredientsDTO.getIngredientMeasure());
+                    }
+                    if(beverageIngredientsDTO.getMeasureAmount() != null){
+                        beverageIngredients.setMeasureAmount(beverageIngredientsDTO.getMeasureAmount());
+                    }
+                    return saveAndReturnDTO(beverageIngredients);
+                }).orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override
     public void deleteById(UUID uuid) {
+        beverageIngredientsRepository.deleteById(uuid);
+    }
 
+    private BeverageIngredientsDTO saveAndReturnDTO(BeverageIngredients beverageIngredients){
+        BeverageIngredients savedBeverageIngredients = beverageIngredientsRepository.save(beverageIngredients);
+        return beverageIngredientsMapper.beverageIngredientsToBeverageIngredientsDTO(savedBeverageIngredients);
     }
 }

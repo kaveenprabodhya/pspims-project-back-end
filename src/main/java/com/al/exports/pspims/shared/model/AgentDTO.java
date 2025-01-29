@@ -14,7 +14,7 @@ import java.util.UUID;
 public class AgentDTO extends PersonDTO {
 
     private AgentDepartmentTypeEnum agentDepartment;
-    private float performanceRate;
+    private Float performanceRate;
     private UUID apiKey;
     private Set<CustomerDTO> customer;
 }

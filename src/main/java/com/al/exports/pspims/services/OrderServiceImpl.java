@@ -1,29 +1,37 @@
 package com.al.exports.pspims.services;
 
-import com.al.exports.pspims.domain.Order;
 
-import java.util.Set;
+import com.al.exports.pspims.shared.model.OrderDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.UUID;
 
 public class OrderServiceImpl implements OrderService {
-    @Override
-    public Set<Order> findAll() {
-        return Set.of();
-    }
 
     @Override
-    public Order findById(UUID uuid) {
+    public Page<OrderDTO> findAll(Pageable pageable) {
         return null;
     }
 
     @Override
-    public Order save(Order object) {
+    public OrderDTO findById(UUID uuid) {
         return null;
     }
 
     @Override
-    public void delete(Order object) {
+    public OrderDTO create(OrderDTO object) {
+        return null;
+    }
 
+    @Override
+    public OrderDTO update(UUID id, OrderDTO object) {
+        return null;
+    }
+
+    @Override
+    public OrderDTO patch(UUID id, OrderDTO object) {
+        return null;
     }
 
     @Override

@@ -1,29 +1,37 @@
 package com.al.exports.pspims.services;
 
-import com.al.exports.pspims.domain.Inventory;
 
-import java.util.Set;
+import com.al.exports.pspims.shared.model.InventoryDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.UUID;
 
 public class InventoryServiceImpl implements InventoryService {
-    @Override
-    public Set<Inventory> findAll() {
-        return Set.of();
-    }
 
     @Override
-    public Inventory findById(UUID uuid) {
+    public Page<InventoryDTO> findAll(Pageable pageable) {
         return null;
     }
 
     @Override
-    public Inventory save(Inventory object) {
+    public InventoryDTO findById(UUID uuid) {
         return null;
     }
 
     @Override
-    public void delete(Inventory object) {
+    public InventoryDTO create(InventoryDTO object) {
+        return null;
+    }
 
+    @Override
+    public InventoryDTO update(UUID id, InventoryDTO object) {
+        return null;
+    }
+
+    @Override
+    public InventoryDTO patch(UUID id, InventoryDTO object) {
+        return null;
     }
 
     @Override

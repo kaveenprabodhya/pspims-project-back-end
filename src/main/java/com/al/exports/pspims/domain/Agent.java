@@ -12,13 +12,21 @@ import java.util.UUID;
 @Setter
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Entity
+@ToString(callSuper = true)
 public class Agent  extends Person {
 
+    @Builder
+    public Agent(String firstName, String lastName, String email, String address, AgentDepartmentTypeEnum agentDepartment, float performanceRate, UUID apiKey, Set<Customer> customer) {
+        super(firstName, lastName, email, address);
+        this.agentDepartment = agentDepartment;
+        this.performanceRate = performanceRate;
+        this.apiKey = apiKey;
+        this.customer = customer;
+    }
+
     private AgentDepartmentTypeEnum agentDepartment;
-    private float performanceRate;
+    private Float performanceRate;
     private UUID apiKey;
 
     // one agent many customers

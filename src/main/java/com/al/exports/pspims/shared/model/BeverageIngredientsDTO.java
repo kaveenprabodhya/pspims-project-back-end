@@ -9,6 +9,6 @@ import lombok.*;
 public class BeverageIngredientsDTO extends BaseItem {
 
     private String ingredientName;
-    private float measureAmount;
+    private Float measureAmount;
     private IngredientMeasureEnum ingredientMeasure;
 }

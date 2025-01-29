@@ -1,29 +1,37 @@
 package com.al.exports.pspims.services;
 
-import com.al.exports.pspims.domain.VinegarProdOrder;
 
-import java.util.Set;
+import com.al.exports.pspims.shared.model.VinegarProdOrderDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.UUID;
 
 public class VinegarProdOrderServiceImpl implements VinegarProdOrderService {
-    @Override
-    public Set<VinegarProdOrder> findAll() {
-        return Set.of();
-    }
 
     @Override
-    public VinegarProdOrder findById(UUID uuid) {
+    public Page<VinegarProdOrderDTO> findAll(Pageable pageable) {
         return null;
     }
 
     @Override
-    public VinegarProdOrder save(VinegarProdOrder object) {
+    public VinegarProdOrderDTO findById(UUID uuid) {
         return null;
     }
 
     @Override
-    public void delete(VinegarProdOrder object) {
+    public VinegarProdOrderDTO create(VinegarProdOrderDTO object) {
+        return null;
+    }
 
+    @Override
+    public VinegarProdOrderDTO update(UUID id, VinegarProdOrderDTO object) {
+        return null;
+    }
+
+    @Override
+    public VinegarProdOrderDTO patch(UUID id, VinegarProdOrderDTO object) {
+        return null;
     }
 
     @Override

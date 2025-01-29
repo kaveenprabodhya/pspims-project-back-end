@@ -13,8 +13,8 @@ import java.util.Date;
 public class CoconutPurchaseDTO extends BaseItem {
 
     private Integer purchaseQuantity;
-    private float pricePerUnit;
-    private float totalPurchaseCost;
+    private Float pricePerUnit;
+    private Float totalPurchaseCost;
     private Date purchaseDate;
     private CoconutQualityGradeEnum coconutQualityGrade;
     private InventoryDTO inventory;

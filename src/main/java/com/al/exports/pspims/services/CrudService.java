@@ -1,15 +1,18 @@
 package com.al.exports.pspims.services;
 
-import java.util.Set;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface CrudService<T, ID> {
-    Set<T> findAll();
+    Page<T> findAll(Pageable pageable);
 
     T findById(ID id);
 
-    T save(T object);
+    T create(T object);
 
-    void delete(T object);
+    T update(ID id, T object);
+
+    T patch(ID id, T object);
 
     void deleteById(ID id);
 }

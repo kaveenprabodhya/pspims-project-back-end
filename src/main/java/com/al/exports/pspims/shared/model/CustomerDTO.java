@@ -13,7 +13,7 @@ import java.util.Set;
 public class CustomerDTO extends PersonDTO {
 
     private CustomerType customerType;
-    private float creditLimit;
+    private Float creditLimit;
     private AgentDTO agent;
     private Set<OrderDTO> order;
     private Set<CopraSaleDTO> copraSale;

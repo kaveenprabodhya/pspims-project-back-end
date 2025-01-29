@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass
+@ToString(callSuper = true)
 public class Person extends BaseEntity {
 
     private String firstName;

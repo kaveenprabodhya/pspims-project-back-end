@@ -1,29 +1,37 @@
 package com.al.exports.pspims.services;
 
-import com.al.exports.pspims.domain.ProdOrderDetails;
 
-import java.util.Set;
+import com.al.exports.pspims.shared.model.ProdOrderDetailsDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.UUID;
 
 public class ProdOrderDetailsServiceImpl implements ProdOrderDetailsService {
-    @Override
-    public Set<ProdOrderDetails> findAll() {
-        return Set.of();
-    }
 
     @Override
-    public ProdOrderDetails findById(UUID uuid) {
+    public Page<ProdOrderDetailsDTO> findAll(Pageable pageable) {
         return null;
     }
 
     @Override
-    public ProdOrderDetails save(ProdOrderDetails object) {
+    public ProdOrderDetailsDTO findById(UUID uuid) {
         return null;
     }
 
     @Override
-    public void delete(ProdOrderDetails object) {
+    public ProdOrderDetailsDTO create(ProdOrderDetailsDTO object) {
+        return null;
+    }
 
+    @Override
+    public ProdOrderDetailsDTO update(UUID id, ProdOrderDetailsDTO object) {
+        return null;
+    }
+
+    @Override
+    public ProdOrderDetailsDTO patch(UUID id, ProdOrderDetailsDTO object) {
+        return null;
     }
 
     @Override

@@ -1,8 +1,8 @@
 package com.al.exports.pspims.services;
 
-import com.al.exports.pspims.domain.DeliveryVehicle;
+import com.al.exports.pspims.shared.model.DeliveryVehicleDTO;
 
 import java.util.UUID;
 
-public interface DeliveryVehicleService extends CrudService<DeliveryVehicle, UUID> {
+public interface DeliveryVehicleService extends CrudService<DeliveryVehicleDTO, UUID> {
 }

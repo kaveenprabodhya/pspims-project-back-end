@@ -19,7 +19,7 @@ import java.util.Date;
 public class Order extends BaseEntity {
 
     private Date orderDate;
-    private float totalOrderAmount;
+    private Float totalOrderAmount;
     private OrderStatusEnum orderStatus;
 
     // one order hv one cWPO

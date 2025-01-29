@@ -1,29 +1,37 @@
 package com.al.exports.pspims.services;
 
-import com.al.exports.pspims.domain.Customer;
 
-import java.util.Set;
+import com.al.exports.pspims.shared.model.CustomerDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.UUID;
 
 public class CustomerServiceImpl implements CustomerService {
-    @Override
-    public Set<Customer> findAll() {
-        return Set.of();
-    }
 
     @Override
-    public Customer findById(UUID uuid) {
+    public Page<CustomerDTO> findAll(Pageable pageable) {
         return null;
     }
 
     @Override
-    public Customer save(Customer object) {
+    public CustomerDTO findById(UUID uuid) {
         return null;
     }
 
     @Override
-    public void delete(Customer object) {
+    public CustomerDTO create(CustomerDTO object) {
+        return null;
+    }
 
+    @Override
+    public CustomerDTO update(UUID id, CustomerDTO object) {
+        return null;
+    }
+
+    @Override
+    public CustomerDTO patch(UUID id, CustomerDTO object) {
+        return null;
     }
 
     @Override

@@ -1,8 +1,9 @@
 package com.al.exports.pspims.services;
 
-import com.al.exports.pspims.domain.Agent;
+
+import com.al.exports.pspims.shared.model.AgentDTO;
 
 import java.util.UUID;
 
-public interface AgentService extends CrudService<Agent, UUID> {
+public interface AgentService extends CrudService<AgentDTO, UUID> {
 }

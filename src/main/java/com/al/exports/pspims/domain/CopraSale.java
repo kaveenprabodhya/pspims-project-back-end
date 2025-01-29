@@ -15,9 +15,9 @@ import java.util.Date;
 @Entity
 public class CopraSale extends BaseEntity {
 
-    private float saleQuantity;
-    private float pricePerQuantity;
-    private float totalSaleAmount;
+    private Float saleQuantity;
+    private Float pricePerQuantity;
+    private Float totalSaleAmount;
     private Date saleDate;
 
     // many copra hv one customer

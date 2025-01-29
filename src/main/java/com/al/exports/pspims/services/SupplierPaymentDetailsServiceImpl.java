@@ -1,30 +1,37 @@
 package com.al.exports.pspims.services;
 
-import com.al.exports.pspims.domain.SupplierPaymentDetails;
 
-import java.util.Set;
+import com.al.exports.pspims.shared.model.SupplierPaymentDetailsDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.UUID;
 
-public class SupplierPaymentDetailsServiceImpl implements SupplierPaymentDetailsService
-{
-    @Override
-    public Set<SupplierPaymentDetails> findAll() {
-        return Set.of();
-    }
+public class SupplierPaymentDetailsServiceImpl implements SupplierPaymentDetailsService {
 
     @Override
-    public SupplierPaymentDetails findById(UUID uuid) {
+    public Page<SupplierPaymentDetailsDTO> findAll(Pageable pageable) {
         return null;
     }
 
     @Override
-    public SupplierPaymentDetails save(SupplierPaymentDetails object) {
+    public SupplierPaymentDetailsDTO findById(UUID uuid) {
         return null;
     }
 
     @Override
-    public void delete(SupplierPaymentDetails object) {
+    public SupplierPaymentDetailsDTO create(SupplierPaymentDetailsDTO object) {
+        return null;
+    }
 
+    @Override
+    public SupplierPaymentDetailsDTO update(UUID id, SupplierPaymentDetailsDTO object) {
+        return null;
+    }
+
+    @Override
+    public SupplierPaymentDetailsDTO patch(UUID id, SupplierPaymentDetailsDTO object) {
+        return null;
     }
 
     @Override

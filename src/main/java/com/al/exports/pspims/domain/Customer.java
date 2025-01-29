@@ -18,7 +18,7 @@ import java.util.Set;
 public class Customer extends Person {
 
     private CustomerType customerType;
-    private float creditLimit;
+    private Float creditLimit;
 
     // one agent many customer
     @ManyToOne

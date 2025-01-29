@@ -18,7 +18,7 @@ public class BeverageType extends BaseEntity {
 
     private String beverageName;
     private String beverageDescription;
-    private boolean isActive;
+    private Boolean isActive;
     private String nutritionInfo;
 
     //one to one

@@ -11,9 +11,9 @@ import java.util.Date;
 @Data
 public class CopraSaleDTO extends BaseItem {
 
-    private float saleQuantity;
-    private float pricePerQuantity;
-    private float totalSaleAmount;
+    private Float saleQuantity;
+    private Float pricePerQuantity;
+    private Float totalSaleAmount;
     private Date saleDate;
     private CustomerDTO customer;
     private ShippingPlanDTO shippingPlan;
