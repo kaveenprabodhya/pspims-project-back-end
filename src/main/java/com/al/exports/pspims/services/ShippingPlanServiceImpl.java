@@ -1,41 +1,94 @@
 package com.al.exports.pspims.services;
 
 
+import com.al.exports.pspims.domain.ShippingPlan;
+import com.al.exports.pspims.repository.ShippingPlanRepository;
+import com.al.exports.pspims.shared.exceptions.ResourceNotFoundException;
+import com.al.exports.pspims.shared.mapper.DeliveryVehicleMapper;
+import com.al.exports.pspims.shared.mapper.ShippingPlanMapper;
 import com.al.exports.pspims.shared.model.ShippingPlanDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+@Service
+@RequiredArgsConstructor
 public class ShippingPlanServiceImpl implements ShippingPlanService {
+
+    private final ShippingPlanRepository shippingPlanRepository;
+    private final ShippingPlanMapper shippingPlanMapper;
+    private final DeliveryVehicleMapper deliveryVehicleMapper;
 
     @Override
     public Page<ShippingPlanDTO> findAll(Pageable pageable) {
-        return null;
+        Page<ShippingPlan> shippingPlans = shippingPlanRepository.findAll(pageable);
+        return shippingPlans.map(shippingPlanMapper::shippingPlanToShippingPlanDTO);
     }
 
     @Override
     public ShippingPlanDTO findById(UUID uuid) {
-        return null;
+        return shippingPlanRepository
+                .findById(uuid)
+                .map(shippingPlanMapper::shippingPlanToShippingPlanDTO)
+                .orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override
-    public ShippingPlanDTO create(ShippingPlanDTO object) {
-        return null;
+    public ShippingPlanDTO create(ShippingPlanDTO shippingPlanDTO) {
+        return saveAndReturnDTO(shippingPlanMapper.shippingPlanDtoToShippingPlan(shippingPlanDTO));
     }
 
     @Override
-    public ShippingPlanDTO update(UUID id, ShippingPlanDTO object) {
-        return null;
+    public ShippingPlanDTO update(UUID id, ShippingPlanDTO shippingPlanDTO) {
+        ShippingPlan shippingPlan = shippingPlanRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        shippingPlan.setShippingAddress(shippingPlanDTO.getShippingAddress());
+        shippingPlan.setShippingDate(shippingPlanDTO.getShippingDate());
+        shippingPlan.setShippingType(shippingPlanDTO.getShippingType());
+        shippingPlan.setTrackingNumber(shippingPlanDTO.getTrackingNumber());
+        shippingPlan.setShippingStatus(shippingPlanDTO.getShippingStatus());
+        shippingPlan.setDeliveryTypeEnum(shippingPlanDTO.getDeliveryTypeEnum());
+        shippingPlan.setDeliveryVehicle(deliveryVehicleMapper.deliveryVehicleDtoTODeliveryVehicle(shippingPlanDTO.getDeliveryVehicle()));
+        return saveAndReturnDTO(shippingPlan);
     }
 
     @Override
-    public ShippingPlanDTO patch(UUID id, ShippingPlanDTO object) {
-        return null;
+    public ShippingPlanDTO patch(UUID id, ShippingPlanDTO shippingPlanDTO) {
+        return shippingPlanRepository.findById(id).map(shippingPlan -> {
+            if (shippingPlanDTO.getShippingAddress() != null) {
+                shippingPlan.setShippingAddress(shippingPlanDTO.getShippingAddress());
+            }
+            if (shippingPlanDTO.getShippingDate() != null) {
+                shippingPlan.setShippingDate(shippingPlanDTO.getShippingDate());
+            }
+            if (shippingPlanDTO.getShippingType() != null) {
+                shippingPlan.setShippingType(shippingPlanDTO.getShippingType());
+            }
+            if (shippingPlanDTO.getTrackingNumber() != null) {
+                shippingPlan.setTrackingNumber(shippingPlanDTO.getTrackingNumber());
+            }
+            if (shippingPlanDTO.getShippingStatus() != null) {
+                shippingPlan.setShippingStatus(shippingPlanDTO.getShippingStatus());
+            }
+            if (shippingPlanDTO.getDeliveryTypeEnum() != null) {
+                shippingPlan.setDeliveryTypeEnum(shippingPlanDTO.getDeliveryTypeEnum());
+            }
+            if (shippingPlanDTO.getDeliveryVehicle() != null) {
+                shippingPlan.setDeliveryVehicle(deliveryVehicleMapper.deliveryVehicleDtoTODeliveryVehicle(shippingPlanDTO.getDeliveryVehicle()));
+            }
+            return saveAndReturnDTO(shippingPlan);
+        }).orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override
     public void deleteById(UUID uuid) {
+        shippingPlanRepository.deleteById(uuid);
+    }
 
+    private ShippingPlanDTO saveAndReturnDTO(ShippingPlan shippingPlan) {
+        ShippingPlan returnShippingPlan = shippingPlanRepository.save(shippingPlan);
+        return shippingPlanMapper.shippingPlanToShippingPlanDTO(returnShippingPlan);
     }
 }

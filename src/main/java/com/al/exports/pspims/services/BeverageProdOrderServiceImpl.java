@@ -49,7 +49,6 @@ public class BeverageProdOrderServiceImpl implements BeverageProdOrderService {
         BeverageProdOrder beverageProdOrder = beverageProdOrderRepository
                 .findById(id)
                 .orElseThrow(ResourceNotFoundException::new);
-        ;
         beverageProdOrder.setBeverageType(beverageTypeMapper.BeverageTypeDtotoBeverageType(beverageProdOrderDTO.getBeverageType()));
         beverageProdOrder.setProdOrderDetails(prodOrderDetailsMapper.prodOrderDetailsDtoToProdOrderDetails(beverageProdOrderDTO.getProdOrderDetails()));
         return saveAndReturnDTO(beverageProdOrder);
