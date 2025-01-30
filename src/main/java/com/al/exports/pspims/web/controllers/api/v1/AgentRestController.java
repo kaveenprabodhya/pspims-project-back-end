@@ -2,18 +2,20 @@ package com.al.exports.pspims.web.controllers.api.v1;
 
 import com.al.exports.pspims.services.AgentService;
 import com.al.exports.pspims.shared.model.AgentDTO;
-import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
+//public record PagedResponse<T>(List<T> content, int pageNumber, int pageSize, long totalElements, int totalPages) {}
+
+@Slf4j
 @RestController
 @RequestMapping(AgentRestController.BASE_URL)
 @RequiredArgsConstructor
@@ -36,45 +38,48 @@ public class AgentRestController {
         }
 
         Page<AgentDTO> agentDTOS = agentService.findAll(PageRequest.of(pageNumber, pageSize));
+
+//        For log error Serializing PageImpl instances as-is is not supported.
+//        PagedResponse<AgentDTO> response = new PagedResponse<>(
+//                agentDTOS.getContent(),
+//                agentDTOS.getNumber(),
+//                agentDTOS.getSize(),
+//                agentDTOS.getTotalElements(),
+//                agentDTOS.getTotalPages()
+//        );
+
         return new ResponseEntity<>(agentDTOS, HttpStatus.OK);
     }
 
     @GetMapping({"/{id}"})
     public ResponseEntity<AgentDTO> getAgentById(@PathVariable UUID id){
+        log.info("Fetching agent with ID: {}", id);
         return new ResponseEntity<>(agentService.findById(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<AgentDTO> createAgent(@RequestBody AgentDTO agentDTO){
+    public ResponseEntity<AgentDTO> createAgent(@Valid @RequestBody AgentDTO agentDTO){
+        log.info("Creating agent: {}", agentDTO);
         return new ResponseEntity<>(agentService.create(agentDTO), HttpStatus.CREATED);
     }
 
     @PutMapping({"/{id}"})
-    public ResponseEntity<AgentDTO> updateAgent(@PathVariable UUID id, @RequestBody AgentDTO agentDTO){
+    public ResponseEntity<AgentDTO> updateAgent(@PathVariable UUID id,@Valid @RequestBody AgentDTO agentDTO){
+        log.info("Fully updating agent with ID: {}", id);
         return new ResponseEntity<>(agentService.update(id, agentDTO), HttpStatus.OK);
     }
 
     @PatchMapping({"/{id}"})
-    public ResponseEntity<AgentDTO> patchAgent(@PathVariable UUID id, @RequestBody AgentDTO agentDTO){
+    public ResponseEntity<AgentDTO> patchAgent(@PathVariable UUID id, @Valid @RequestBody AgentDTO agentDTO){
+        log.info("Partial updating agent with ID: {}", id);
         return new ResponseEntity<>(agentService.patch(id, agentDTO), HttpStatus.OK);
     }
 
     @DeleteMapping({"/{id}"})
     public ResponseEntity<Void> deleteAgentById(@PathVariable UUID id){
+        log.warn("Deleting agent with ID: {}", id);
         agentService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @ExceptionHandler(ConstraintViolationException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    ResponseEntity<List<String>> badRequestHandler(ConstraintViolationException e){
-        List<String> errors = new ArrayList<>(e.getConstraintViolations().size());
-
-        e.getConstraintViolations().forEach(constraintViolation -> {
-            errors.add(constraintViolation.getPropertyPath().toString() + " : " + constraintViolation.getMessage());
-        });
-
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
 }
