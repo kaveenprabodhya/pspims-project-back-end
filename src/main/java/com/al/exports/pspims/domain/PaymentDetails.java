@@ -3,6 +3,8 @@ package com.al.exports.pspims.domain;
 import com.al.exports.pspims.shared.enums.PaymentMethodEnum;
 import com.al.exports.pspims.shared.enums.PaymentStatusEnum;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.*;
 
 import java.math.BigInteger;
@@ -16,9 +18,11 @@ import java.util.Date;
 @Entity
 public class PaymentDetails extends BaseEntity {
 
+    @Enumerated(EnumType.STRING)
     private PaymentStatusEnum paymentStatus;
     private Date paymentDate;
     private Float paymentAmount;
     private BigInteger invoiceNo;
+    @Enumerated(EnumType.STRING)
     private PaymentMethodEnum paymentMethod;
 }

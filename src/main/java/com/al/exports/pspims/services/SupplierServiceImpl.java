@@ -4,6 +4,7 @@ package com.al.exports.pspims.services;
 import com.al.exports.pspims.domain.Supplier;
 import com.al.exports.pspims.repository.SupplierRepository;
 import com.al.exports.pspims.shared.exceptions.ResourceNotFoundException;
+import com.al.exports.pspims.shared.mapper.AgentMapper;
 import com.al.exports.pspims.shared.mapper.SupplierMapper;
 import com.al.exports.pspims.shared.model.SupplierDTO;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ public class SupplierServiceImpl implements SupplierService {
 
     private final SupplierRepository supplierRepository;
     private final SupplierMapper supplierMapper;
+    private final AgentMapper agentMapper;
 
     @Override
     public Page<SupplierDTO> findAll(Pageable pageable) {
@@ -28,7 +30,7 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     public SupplierDTO findById(UUID uuid) {
-        return supplierRepository.findById(uuid).map(supplierMapper::supplierToSupplierDTO).orElseThrow(ResourceNotFoundException::new);
+        return supplierRepository.findById(uuid).map(supplierMapper::supplierToSupplierDTO).orElseThrow(() -> new ResourceNotFoundException("Not found supplier with id: " + uuid));
     }
 
     @Override
@@ -38,13 +40,14 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     public SupplierDTO update(UUID id, SupplierDTO supplierDTO) {
-        Supplier supplier = supplierRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        Supplier supplier = supplierRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found supplier with id: " + id));
         supplier.setFirstName(supplierDTO.getFirstName());
         supplier.setLastName(supplierDTO.getLastName());
         supplier.setEmail(supplierDTO.getEmail());
         supplier.setAddress(supplierDTO.getAddress());
         supplier.setSupplierStatus(supplierDTO.getSupplierStatus());
         supplier.setSupplierPaymentTerms(supplierDTO.getSupplierPaymentTerms());
+        supplier.setAgent(agentMapper.agentDtoToAgent(supplierDTO.getAgent()));
         return saveAndReturnDTO(supplier);
     }
 
@@ -71,9 +74,13 @@ public class SupplierServiceImpl implements SupplierService {
                     if (supplierDTO.getSupplierPaymentTerms() != null) {
                         supplier.setSupplierPaymentTerms(supplierDTO.getSupplierPaymentTerms());
                     }
+                    if (supplierDTO.getAgent() != null) {
+                        supplier.setAgent(agentMapper.agentDtoToAgent(supplierDTO.getAgent()));
+                    }
+
                     return saveAndReturnDTO(supplier);
                 })
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(() -> new ResourceNotFoundException("Not found supplier with id: " + id));
     }
 
     @Override

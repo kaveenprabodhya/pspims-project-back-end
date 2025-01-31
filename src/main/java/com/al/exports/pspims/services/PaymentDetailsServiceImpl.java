@@ -30,7 +30,7 @@ public class PaymentDetailsServiceImpl implements PaymentDetailsService {
         return paymentDetailsRepository
                 .findById(uuid)
                 .map(paymentDetailsMapper::paymentDetailsToPaymentDetailsDTO)
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(() -> new ResourceNotFoundException("Not found payment detail with id: " + uuid));
     }
 
     @Override
@@ -40,7 +40,7 @@ public class PaymentDetailsServiceImpl implements PaymentDetailsService {
 
     @Override
     public PaymentDetailsDTO update(UUID id, PaymentDetailsDTO paymentDetailsDTO) {
-        PaymentDetails paymentDetails = paymentDetailsRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        PaymentDetails paymentDetails = paymentDetailsRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found payment detail with id: " + id));
         paymentDetails.setPaymentStatus(paymentDetailsDTO.getPaymentStatus());
         paymentDetails.setPaymentAmount(paymentDetailsDTO.getPaymentAmount());
         paymentDetails.setPaymentDate(paymentDetailsDTO.getPaymentDate());
@@ -71,7 +71,7 @@ public class PaymentDetailsServiceImpl implements PaymentDetailsService {
                     }
                     return saveAndReturnDTO(paymentDetails);
                 })
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(() -> new ResourceNotFoundException("Not found payment detail with id: " + id));
     }
 
     @Override

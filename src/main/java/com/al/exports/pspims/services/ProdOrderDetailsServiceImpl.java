@@ -28,7 +28,7 @@ public class ProdOrderDetailsServiceImpl implements ProdOrderDetailsService {
 
     @Override
     public ProdOrderDetailsDTO findById(UUID uuid) {
-        return prodOrderDetailsRepository.findById(uuid).map(prodOrderDetailsMapper::prodOrderDetailsToProdOrderDetailsDTO).orElseThrow(ResourceNotFoundException::new);
+        return prodOrderDetailsRepository.findById(uuid).map(prodOrderDetailsMapper::prodOrderDetailsToProdOrderDetailsDTO).orElseThrow(() -> new ResourceNotFoundException("Not found production order detail with id: " + uuid));
     }
 
     @Override
@@ -38,7 +38,7 @@ public class ProdOrderDetailsServiceImpl implements ProdOrderDetailsService {
 
     @Override
     public ProdOrderDetailsDTO update(UUID id, ProdOrderDetailsDTO prodOrderDetailsDTO) {
-        ProdOrderDetails prodOrderDetails = prodOrderDetailsRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        ProdOrderDetails prodOrderDetails = prodOrderDetailsRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found production order detail with id: " + id));
         prodOrderDetails.setProdQuantity(prodOrderDetailsDTO.getProdQuantity());
         prodOrderDetails.setProdDate(prodOrderDetailsDTO.getProdDate());
         prodOrderDetails.setProductionQuantityMeasure(prodOrderDetailsDTO.getProductionQuantityMeasure());
@@ -69,7 +69,7 @@ public class ProdOrderDetailsServiceImpl implements ProdOrderDetailsService {
                     }
                     return saveAndReturnDTO(prodOrderDetails);
                 })
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(() -> new ResourceNotFoundException("Not found production order detail with id: " + id));
     }
 
     @Override

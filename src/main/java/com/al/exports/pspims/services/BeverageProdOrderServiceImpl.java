@@ -36,7 +36,7 @@ public class BeverageProdOrderServiceImpl implements BeverageProdOrderService {
         return beverageProdOrderRepository
                 .findById(uuid)
                 .map(beverageProdOrderMapper::beverageProdOrderToBeverageProdOrderDTO)
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(() -> new ResourceNotFoundException("Not found beverage production order with id: " + uuid));
     }
 
     @Override
@@ -48,7 +48,7 @@ public class BeverageProdOrderServiceImpl implements BeverageProdOrderService {
     public BeverageProdOrderDTO update(UUID id, BeverageProdOrderDTO beverageProdOrderDTO) {
         BeverageProdOrder beverageProdOrder = beverageProdOrderRepository
                 .findById(id)
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(() -> new ResourceNotFoundException("Not found beverage production order with id: " + id));
         beverageProdOrder.setBeverageType(beverageTypeMapper.BeverageTypeDtotoBeverageType(beverageProdOrderDTO.getBeverageType()));
         beverageProdOrder.setProdOrderDetails(prodOrderDetailsMapper.prodOrderDetailsDtoToProdOrderDetails(beverageProdOrderDTO.getProdOrderDetails()));
         return saveAndReturnDTO(beverageProdOrder);
@@ -64,7 +64,7 @@ public class BeverageProdOrderServiceImpl implements BeverageProdOrderService {
                 beverageProdOrder.setBeverageType(beverageTypeMapper.BeverageTypeDtotoBeverageType(beverageProdOrderDTO.getBeverageType()));
             }
             return saveAndReturnDTO(beverageProdOrder);
-        }).orElseThrow(ResourceNotFoundException::new);
+        }).orElseThrow(() -> new ResourceNotFoundException("Not found beverage production order with id: " + id));
     }
 
     @Override

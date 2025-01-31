@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -25,6 +26,7 @@ public class AgentRestController {
     private static final Integer DEFAULT_PAGE_NUMBER = 0;
     private static final Integer DEFAULT_PAGE_SIZE = 25;
 
+    @Secured("ROLE_ADMIN")
     @GetMapping
     public ResponseEntity<Page<AgentDTO>> getAllAgents(@RequestParam(value = "pageNumber", required = false) Integer pageNumber,
                             @RequestParam(value = "pageSize", required = false) Integer pageSize){
@@ -51,30 +53,35 @@ public class AgentRestController {
         return new ResponseEntity<>(agentDTOS, HttpStatus.OK);
     }
 
+    @Secured("ROLE_ADMIN")
     @GetMapping({"/{id}"})
     public ResponseEntity<AgentDTO> getAgentById(@PathVariable UUID id){
         log.info("Fetching agent with ID: {}", id);
         return new ResponseEntity<>(agentService.findById(id), HttpStatus.OK);
     }
 
+    @Secured("ROLE_ADMIN")
     @PostMapping
     public ResponseEntity<AgentDTO> createAgent(@Valid @RequestBody AgentDTO agentDTO){
         log.info("Creating agent: {}", agentDTO);
         return new ResponseEntity<>(agentService.create(agentDTO), HttpStatus.CREATED);
     }
 
+    @Secured("ROLE_ADMIN")
     @PutMapping({"/{id}"})
     public ResponseEntity<AgentDTO> updateAgent(@PathVariable UUID id,@Valid @RequestBody AgentDTO agentDTO){
         log.info("Fully updating agent with ID: {}", id);
         return new ResponseEntity<>(agentService.update(id, agentDTO), HttpStatus.OK);
     }
 
+    @Secured("ROLE_ADMIN")
     @PatchMapping({"/{id}"})
     public ResponseEntity<AgentDTO> patchAgent(@PathVariable UUID id, @Valid @RequestBody AgentDTO agentDTO){
         log.info("Partial updating agent with ID: {}", id);
         return new ResponseEntity<>(agentService.patch(id, agentDTO), HttpStatus.OK);
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping({"/{id}"})
     public ResponseEntity<Void> deleteAgentById(@PathVariable UUID id){
         log.warn("Deleting agent with ID: {}", id);

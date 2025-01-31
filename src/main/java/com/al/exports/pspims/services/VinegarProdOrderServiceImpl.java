@@ -33,7 +33,7 @@ public class VinegarProdOrderServiceImpl implements VinegarProdOrderService {
         return vinegarProdOrderRepository
                 .findById(uuid)
                 .map(vinegarProdOrderMapper::vinegarProdOrderToVinegarProdOrderDTO)
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(() -> new ResourceNotFoundException("Not found vinegar production order with id: " + uuid));
     }
 
     @Override
@@ -43,7 +43,7 @@ public class VinegarProdOrderServiceImpl implements VinegarProdOrderService {
 
     @Override
     public VinegarProdOrderDTO update(UUID id, VinegarProdOrderDTO vinegarProdOrderDTO) {
-        VinegarProdOrder vinegarProdOrder = vinegarProdOrderRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        VinegarProdOrder vinegarProdOrder = vinegarProdOrderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found vinegar production order with id: " + id));
         vinegarProdOrder.setProdOrderDetails(prodOrderDetailsMapper.prodOrderDetailsDtoToProdOrderDetails(vinegarProdOrderDTO.getProdOrderDetails()));
         vinegarProdOrder.setFermentationType(vinegarProdOrderDTO.getFermentationType());
         return saveAndReturnDTO(vinegarProdOrder);

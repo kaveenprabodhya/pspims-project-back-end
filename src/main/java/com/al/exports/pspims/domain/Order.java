@@ -1,10 +1,7 @@
 package com.al.exports.pspims.domain;
 
 import com.al.exports.pspims.shared.enums.OrderStatusEnum;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
@@ -20,6 +17,7 @@ public class Order extends BaseEntity {
 
     private Date orderDate;
     private Float totalOrderAmount;
+    @Enumerated(EnumType.STRING)
     private OrderStatusEnum orderStatus;
 
     // one order hv one cWPO

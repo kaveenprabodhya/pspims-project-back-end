@@ -1,9 +1,7 @@
 package com.al.exports.pspims.domain;
 
 import com.al.exports.pspims.shared.enums.InventoryItemTypeEnum;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Set;
@@ -16,6 +14,7 @@ import java.util.Set;
 @Entity
 public class Inventory extends BaseEntity {
 
+    @Enumerated(EnumType.STRING)
     private InventoryItemTypeEnum inventoryItemType;
     private Float inventoryQuantity;
     private Float minimumStockLevel;

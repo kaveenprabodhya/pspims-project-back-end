@@ -34,7 +34,7 @@ public class CopraSaleServiceImpl implements CopraSaleService {
 
     @Override
     public CopraSaleDTO findById(UUID uuid) {
-        return copraSaleRepository.findById(uuid).map(copraSaleMapper::copraSaleToCopraSaleDTO).orElseThrow(ResourceNotFoundException::new);
+        return copraSaleRepository.findById(uuid).map(copraSaleMapper::copraSaleToCopraSaleDTO).orElseThrow(() -> new ResourceNotFoundException("Not found copra sale with id: " + uuid));
     }
 
     @Override
@@ -44,7 +44,7 @@ public class CopraSaleServiceImpl implements CopraSaleService {
 
     @Override
     public CopraSaleDTO update(UUID id, CopraSaleDTO copraSaleDTO) {
-        CopraSale copraSale = copraSaleRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        CopraSale copraSale = copraSaleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found copra sale with id: " + id));
         copraSale.setSaleQuantity(copraSaleDTO.getSaleQuantity());
         copraSale.setPricePerQuantity(copraSaleDTO.getPricePerQuantity());
         copraSale.setTotalSaleAmount(copraSaleDTO.getTotalSaleAmount());
@@ -82,7 +82,7 @@ public class CopraSaleServiceImpl implements CopraSaleService {
             }
 
             return saveAndReturnDTO(copraSale);
-        }).orElseThrow(ResourceNotFoundException::new);
+        }).orElseThrow(() -> new ResourceNotFoundException("Not found copra sale with id: " + id));
     }
 
     @Override

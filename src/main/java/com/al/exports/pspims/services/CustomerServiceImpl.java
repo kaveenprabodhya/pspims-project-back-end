@@ -30,7 +30,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDTO findById(UUID uuid) {
-        return customerRepository.findById(uuid).map(customerMapper::customerToCustomerDTO).orElseThrow(ResourceNotFoundException::new);
+        return customerRepository.findById(uuid).map(customerMapper::customerToCustomerDTO).orElseThrow(() -> new ResourceNotFoundException("Not found customer with id: " + uuid));
     }
 
     @Override
@@ -40,7 +40,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDTO update(UUID id, CustomerDTO customerDTO) {
-        Customer customer = customerRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        Customer customer = customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found customer with id: " + id));
         customer.setFirstName(customerDTO.getFirstName());
         customer.setLastName(customerDTO.getLastName());
         customer.setEmail(customerDTO.getEmail());
@@ -76,7 +76,7 @@ public class CustomerServiceImpl implements CustomerService {
                 customer.setAgent(agentMapper.agentDtoToAgent(customerDTO.getAgent()));
             }
             return saveAndReturnDTO(customer);
-        }).orElseThrow(ResourceNotFoundException::new);
+        }).orElseThrow(() -> new ResourceNotFoundException("Not found customer with id: " + id));
     }
 
     @Override

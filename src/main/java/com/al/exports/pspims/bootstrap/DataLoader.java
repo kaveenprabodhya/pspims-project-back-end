@@ -26,6 +26,8 @@ public class DataLoader implements CommandLineRunner {
         Agent newAgent = Agent.builder()
                 .firstName("Kaveen")
                 .lastName("Prabodhya")
+                .username("kaveen")
+                .password("password")
                 .agentDepartment(AgentDepartmentTypeEnum.LOGISTICS)
                 .address("75 A, Colombo 01")
                 .email("agent1@example.com")

@@ -33,7 +33,7 @@ public class CoconutWaterProdOrderServiceImpl implements CoconutWaterProdOrderSe
         return coconutWaterProdOrderRepository
                 .findById(uuid)
                 .map(coconutWaterProdOrderMapper::coconutWaterProdOrderToCoconutWaterProdOrderDTO)
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(() -> new ResourceNotFoundException("Not found coconut water production order with id: " + uuid));
     }
 
     @Override
@@ -45,7 +45,7 @@ public class CoconutWaterProdOrderServiceImpl implements CoconutWaterProdOrderSe
     public CoconutWaterProdOrderDTO update(UUID id, CoconutWaterProdOrderDTO coconutWaterProdOrderDTO) {
         CoconutWaterProdOrder coconutWaterProdOrder = coconutWaterProdOrderRepository
                 .findById(id)
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(() -> new ResourceNotFoundException("Not found coconut water production order with id: " + id));
         coconutWaterProdOrder
                 .setProdOrderDetails(prodOrderDetailsMapper
                         .prodOrderDetailsDtoToProdOrderDetails(coconutWaterProdOrderDTO.getProdOrderDetails())
@@ -66,7 +66,7 @@ public class CoconutWaterProdOrderServiceImpl implements CoconutWaterProdOrderSe
                         );
             }
             return saveAndReturnDTO(coconutWaterProdOrder);
-        }).orElseThrow(ResourceNotFoundException::new);
+        }).orElseThrow(() -> new ResourceNotFoundException("Not found coconut water production order with id: " + id));
     }
 
     @Override

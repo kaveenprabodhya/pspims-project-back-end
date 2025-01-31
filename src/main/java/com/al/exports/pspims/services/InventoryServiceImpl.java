@@ -31,7 +31,7 @@ public class InventoryServiceImpl implements InventoryService {
         return inventoryRepository.
                 findById(uuid)
                 .map(inventoryMapper::inventoryToInventoryDTO)
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(() -> new ResourceNotFoundException("Not found inventory with id: " + uuid));
     }
 
     @Override
@@ -41,7 +41,7 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Override
     public InventoryDTO update(UUID id, InventoryDTO inventoryDTO) {
-        Inventory inventory = inventoryRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        Inventory inventory = inventoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found inventory with id: " + id));
         inventory.setInventoryItemType(inventoryDTO.getInventoryItemType());
         inventory.setInventoryQuantity(inventoryDTO.getInventoryQuantity());
         inventory.setMinimumStockLevel(inventoryDTO.getMinimumStockLevel());
@@ -65,7 +65,7 @@ public class InventoryServiceImpl implements InventoryService {
                 inventory.setMinimumStockLevel(inventoryDTO.getMinimumStockLevel());
             }
             return  saveAndReturnDTO(inventory);
-        }).orElseThrow(ResourceNotFoundException::new);
+        }).orElseThrow(() -> new ResourceNotFoundException("Not found inventory with id: " + id));
     }
 
     @Override

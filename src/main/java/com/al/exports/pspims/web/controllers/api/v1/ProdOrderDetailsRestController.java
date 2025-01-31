@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -23,6 +24,7 @@ public class ProdOrderDetailsRestController {
     private static final Integer DEFAULT_PAGE_NUMBER = 0;
     private static final Integer DEFAULT_PAGE_SIZE = 25;
 
+    @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @GetMapping
     public ResponseEntity<Page<ProdOrderDetailsDTO>> getAllProdOrderDetails(@RequestParam(value = "pageNumber", required = false) Integer pageNumber,
                                                                          @RequestParam(value = "pageSize", required = false) Integer pageSize){
@@ -40,30 +42,35 @@ public class ProdOrderDetailsRestController {
         return new ResponseEntity<>(prodOrderDetailsDTOS, HttpStatus.OK);
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @GetMapping({"/{id}"})
     public ResponseEntity<ProdOrderDetailsDTO> getProdOrderDetailsById(@PathVariable UUID id){
         log.info("Fetching prodOrderDetail with ID: {}", id);
         return new ResponseEntity<>(prodOrderDetailsService.findById(id), HttpStatus.OK);
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @PostMapping
     public ResponseEntity<ProdOrderDetailsDTO> createProdOrderDetails(@Valid @RequestBody ProdOrderDetailsDTO prodOrderDetailsDTOS){
         log.info("Creating prodOrderDetail: {}", prodOrderDetailsDTOS);
         return new ResponseEntity<>(prodOrderDetailsService.create(prodOrderDetailsDTOS), HttpStatus.CREATED);
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @PutMapping({"/{id}"})
     public ResponseEntity<ProdOrderDetailsDTO> updateProdOrderDetails(@PathVariable UUID id,@Valid @RequestBody ProdOrderDetailsDTO prodOrderDetailsDTOS){
         log.info("Fully updating prodOrderDetail with ID: {}", id);
         return new ResponseEntity<>(prodOrderDetailsService.update(id, prodOrderDetailsDTOS), HttpStatus.OK);
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @PatchMapping({"/{id}"})
     public ResponseEntity<ProdOrderDetailsDTO> patchProdOrderDetails(@PathVariable UUID id, @Valid @RequestBody ProdOrderDetailsDTO prodOrderDetailsDTOS){
         log.info("Partial updating prodOrderDetail with ID: {}", id);
         return new ResponseEntity<>(prodOrderDetailsService.patch(id, prodOrderDetailsDTOS), HttpStatus.OK);
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @DeleteMapping({"/{id}"})
     public ResponseEntity<Void> deleteProdOrderDetailsById(@PathVariable UUID id){
         log.warn("Deleting prodOrderDetail with ID: {}", id);

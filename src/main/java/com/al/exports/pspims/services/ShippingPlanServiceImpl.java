@@ -33,7 +33,7 @@ public class ShippingPlanServiceImpl implements ShippingPlanService {
         return shippingPlanRepository
                 .findById(uuid)
                 .map(shippingPlanMapper::shippingPlanToShippingPlanDTO)
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(() -> new ResourceNotFoundException("Not found shipping plan with id: " + uuid));
     }
 
     @Override
@@ -43,7 +43,7 @@ public class ShippingPlanServiceImpl implements ShippingPlanService {
 
     @Override
     public ShippingPlanDTO update(UUID id, ShippingPlanDTO shippingPlanDTO) {
-        ShippingPlan shippingPlan = shippingPlanRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        ShippingPlan shippingPlan = shippingPlanRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found shipping plan with id: " + id));
         shippingPlan.setShippingAddress(shippingPlanDTO.getShippingAddress());
         shippingPlan.setShippingDate(shippingPlanDTO.getShippingDate());
         shippingPlan.setShippingType(shippingPlanDTO.getShippingType());
@@ -79,7 +79,7 @@ public class ShippingPlanServiceImpl implements ShippingPlanService {
                 shippingPlan.setDeliveryVehicle(deliveryVehicleMapper.deliveryVehicleDtoTODeliveryVehicle(shippingPlanDTO.getDeliveryVehicle()));
             }
             return saveAndReturnDTO(shippingPlan);
-        }).orElseThrow(ResourceNotFoundException::new);
+        }).orElseThrow(() -> new ResourceNotFoundException("Not found shipping plan with id: " + id));
     }
 
     @Override

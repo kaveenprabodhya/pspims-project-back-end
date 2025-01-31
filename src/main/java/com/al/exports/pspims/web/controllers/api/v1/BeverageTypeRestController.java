@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -23,6 +24,7 @@ public class BeverageTypeRestController {
     private static final Integer DEFAULT_PAGE_NUMBER = 0;
     private static final Integer DEFAULT_PAGE_SIZE = 25;
 
+    @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @GetMapping
     public ResponseEntity<Page<BeverageTypeDTO>> getAllBeverageTypes(@RequestParam(value = "pageNumber", required = false) Integer pageNumber,
                                                               @RequestParam(value = "pageSize", required = false) Integer pageSize){
@@ -40,30 +42,35 @@ public class BeverageTypeRestController {
         return new ResponseEntity<>(beverageTypeDTOS, HttpStatus.OK);
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @GetMapping({"/{id}"})
     public ResponseEntity<BeverageTypeDTO> getBeverageTypeById(@PathVariable UUID id){
         log.info("Fetching beverageType with ID: {}", id);
         return new ResponseEntity<>(beverageTypeService.findById(id), HttpStatus.OK);
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @PostMapping
     public ResponseEntity<BeverageTypeDTO> createBeverageType(@Valid @RequestBody BeverageTypeDTO beverageTypeDTOS){
         log.info("Creating beverageType: {}", beverageTypeDTOS);
         return new ResponseEntity<>(beverageTypeService.create(beverageTypeDTOS), HttpStatus.CREATED);
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @PutMapping({"/{id}"})
     public ResponseEntity<BeverageTypeDTO> updateBeverageType(@PathVariable UUID id,@Valid @RequestBody BeverageTypeDTO beverageTypeDTOS){
         log.info("Fully updating beverageType with ID: {}", id);
         return new ResponseEntity<>(beverageTypeService.update(id, beverageTypeDTOS), HttpStatus.OK);
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @PatchMapping({"/{id}"})
     public ResponseEntity<BeverageTypeDTO> patchBeverageType(@PathVariable UUID id, @Valid @RequestBody BeverageTypeDTO beverageTypeDTOS){
         log.info("Partial updating beverageType with ID: {}", id);
         return new ResponseEntity<>(beverageTypeService.patch(id, beverageTypeDTOS), HttpStatus.OK);
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @DeleteMapping({"/{id}"})
     public ResponseEntity<Void> deleteBeverageTypeById(@PathVariable UUID id){
         log.warn("Deleting beverageType with ID: {}", id);

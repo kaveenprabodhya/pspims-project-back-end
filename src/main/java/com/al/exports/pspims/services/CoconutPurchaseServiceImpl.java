@@ -35,7 +35,7 @@ public class CoconutPurchaseServiceImpl implements CoconutPurchaseService {
         return coconutPurchaseRepository.
                 findById(uuid)
                 .map(coconutPurchaseMapper::coconutPurchaseToCoconutPurchaseDTO)
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(() -> new ResourceNotFoundException("Not found coconut purchase with id: " + uuid));
     }
 
     @Override
@@ -45,7 +45,7 @@ public class CoconutPurchaseServiceImpl implements CoconutPurchaseService {
 
     @Override
     public CoconutPurchaseDTO update(UUID id, CoconutPurchaseDTO coconutPurchaseDTO) {
-        CoconutPurchase coconutPurchase = coconutPurchaseRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        CoconutPurchase coconutPurchase = coconutPurchaseRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found coconut purchase with id: " + id));
         coconutPurchase.setPurchaseQuantity(coconutPurchaseDTO.getPurchaseQuantity());
         coconutPurchase.setPricePerUnit(coconutPurchaseDTO.getPricePerUnit());
         coconutPurchase.setTotalPurchaseCost(coconutPurchaseDTO.getTotalPurchaseCost());
@@ -75,7 +75,7 @@ public class CoconutPurchaseServiceImpl implements CoconutPurchaseService {
                 coconutPurchase.setSupplier(supplierMapper.supplierDtoToSupplier(coconutPurchaseDTO.getSupplier()));
             }
             return saveAndReturnDTO(coconutPurchase);
-        }).orElseThrow(ResourceNotFoundException::new);
+        }).orElseThrow(() -> new ResourceNotFoundException("Not found coconut purchase with id: " + id));
     }
 
     @Override

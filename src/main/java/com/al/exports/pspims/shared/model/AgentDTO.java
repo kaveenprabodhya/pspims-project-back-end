@@ -1,20 +1,24 @@
 package com.al.exports.pspims.shared.model;
 
+import com.al.exports.pspims.domain.Supplier;
 import com.al.exports.pspims.shared.enums.AgentDepartmentTypeEnum;
+import com.al.exports.pspims.shared.enums.Role;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.Set;
-import java.util.UUID;
 
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class AgentDTO extends PersonDTO {
-
+    private String username;
+    private String password;
+    private Role role;
     private AgentDepartmentTypeEnum agentDepartment;
     private Float performanceRate;
-    private UUID apiKey;
-    private Set<CustomerDTO> customer;
+    private String apiKey;
+    private Set<CustomerDTO> customers;
+    private Set<Supplier> suppliers;
 }

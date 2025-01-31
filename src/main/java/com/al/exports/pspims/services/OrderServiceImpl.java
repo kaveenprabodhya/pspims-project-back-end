@@ -37,7 +37,7 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository
                 .findById(uuid)
                 .map(orderMapper::orderToOrderDTO)
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(() -> new ResourceNotFoundException("Not found order with id: " + uuid));
     }
 
     @Override
@@ -47,7 +47,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDTO update(UUID id, OrderDTO orderDTO) {
-        Order order = orderRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        Order order = orderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found order with id: " + id));
         order.setOrderDate(orderDTO.getOrderDate());
         order.setTotalOrderAmount(order.getTotalOrderAmount());
         order.setOrderStatus(order.getOrderStatus());
@@ -91,7 +91,7 @@ public class OrderServiceImpl implements OrderService {
                 order.setShippingPlan(shippingPlanMapper.shippingPlanDtoToShippingPlan(orderDTO.getShippingPlan()));
             }
             return saveAndReturnDTO(order);
-        }).orElseThrow(ResourceNotFoundException::new);
+        }).orElseThrow(() -> new ResourceNotFoundException("Not found order with id: " + id));
     }
 
     @Override

@@ -11,8 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.UUID;
 
 @Slf4j
@@ -35,7 +33,15 @@ public class AgentServiceImpl implements AgentService {
         return agentRepository
                 .findById(uuid)
                 .map(agentMapper::agentToAgentDTO)
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(() -> new ResourceNotFoundException("Agent not found with id: "+uuid));
+    }
+
+    @Override
+    public AgentDTO findByUsername(String username){
+        return agentRepository
+                .findByUsername(username)
+                .map(agentMapper::agentToAgentDTO)
+                .orElseThrow(() -> new ResourceNotFoundException("Agent not found with username: "+username));
     }
 
     private AgentDTO saveAndReturnDTO(Agent agent){
@@ -64,6 +70,16 @@ public class AgentServiceImpl implements AgentService {
     }
 
     @Override
+    public AgentDTO update(String token, UUID id){
+        Agent agent = agentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Agent not found with id: " + id));
+        if(!token.isEmpty()){
+            agent.setApiKey(token);
+        }
+        return saveAndReturnDTO(agent);
+    }
+
+    @Override
     public AgentDTO patch(UUID id, AgentDTO agentDTO) {
         return agentRepository.findById(id)
                 .map(agent -> {
@@ -86,7 +102,7 @@ public class AgentServiceImpl implements AgentService {
                         agent.setPerformanceRate(agentDTO.getPerformanceRate());
                     }
                     return saveAndReturnDTO(agent);
-                }).orElseThrow(ResourceNotFoundException::new);
+                }).orElseThrow(() -> new ResourceNotFoundException("Agent not found with id: " + id));
     }
 
     @Override

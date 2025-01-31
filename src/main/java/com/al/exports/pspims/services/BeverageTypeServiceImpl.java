@@ -34,7 +34,7 @@ public class BeverageTypeServiceImpl implements BeverageTypeService {
         return beverageTypeRepository
                 .findById(uuid)
                 .map(beverageTypeMapper::BeverageTypeToBeverageTypeDTO)
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(() -> new ResourceNotFoundException("Not found beverage type with id: " + uuid));
     }
 
     @Override
@@ -44,7 +44,7 @@ public class BeverageTypeServiceImpl implements BeverageTypeService {
 
     @Override
     public BeverageTypeDTO update(UUID id, BeverageTypeDTO beverageTypeDTO) {
-        BeverageType beverageType = beverageTypeRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        BeverageType beverageType = beverageTypeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found beverage type with id: " + id));
         beverageType.setBeverageName(beverageTypeDTO.getBeverageName());
         beverageType.setBeverageDescription(beverageTypeDTO.getBeverageDescription());
         beverageType.setIsActive(beverageTypeDTO.getIsActive());
@@ -68,7 +68,7 @@ public class BeverageTypeServiceImpl implements BeverageTypeService {
                 beverageType.setBeverageIngredients(beverageIngredientsMapper.beverageIngredientsDtoToBeverageIngredients(beverageTypeDTO.getBeverageIngredients()));
             }
             return saveAndReturnDTO(beverageType);
-        }).orElseThrow(ResourceNotFoundException::new);
+        }).orElseThrow(() -> new ResourceNotFoundException("Not found beverage type with id: " + id));
     }
 
     @Override

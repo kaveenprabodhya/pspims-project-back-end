@@ -34,7 +34,7 @@ public class BeverageIngredientsServiceImpl implements BeverageIngredientsServic
         return beverageIngredientsRepository
                 .findById(uuid)
                 .map(beverageIngredientsMapper::beverageIngredientsToBeverageIngredientsDTO)
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(() -> new ResourceNotFoundException("Not found beverage ingredients with id: "+ uuid));
     }
 
     @Override
@@ -53,7 +53,7 @@ public class BeverageIngredientsServiceImpl implements BeverageIngredientsServic
             return saveAndReturnDTO(beverageIngredients);
         }
         else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found. UUID: " + id);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found beverage ingredients with id: " + id);
         }
     }
 
@@ -71,7 +71,7 @@ public class BeverageIngredientsServiceImpl implements BeverageIngredientsServic
                         beverageIngredients.setMeasureAmount(beverageIngredientsDTO.getMeasureAmount());
                     }
                     return saveAndReturnDTO(beverageIngredients);
-                }).orElseThrow(ResourceNotFoundException::new);
+                }).orElseThrow(() -> new ResourceNotFoundException("Not found beverage ingredients with id: " + id));
     }
 
     @Override

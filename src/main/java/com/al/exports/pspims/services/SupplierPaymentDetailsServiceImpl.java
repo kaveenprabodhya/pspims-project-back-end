@@ -35,7 +35,7 @@ public class SupplierPaymentDetailsServiceImpl implements SupplierPaymentDetails
         return supplierPaymentDetailsRepository
                 .findById(uuid)
                 .map(supplierPaymentDetailsMapper::supplierPaymentDetailsToSupplierPaymentDetailsDTO)
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(() -> new ResourceNotFoundException("Not found supplier payment detail with id: " + uuid));
     }
 
     @Override
@@ -46,7 +46,7 @@ public class SupplierPaymentDetailsServiceImpl implements SupplierPaymentDetails
     @Override
     public SupplierPaymentDetailsDTO update(UUID id, SupplierPaymentDetailsDTO supplierPaymentDetailsDTO) {
         SupplierPaymentDetails supplierPaymentDetails = supplierPaymentDetailsRepository.findById(id)
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(() -> new ResourceNotFoundException("Not found supplier payment detail with id: " + id));
         supplierPaymentDetails.setPaymentDetails(paymentDetailsMapper.paymentDetailsDtoToPaymentDetails(supplierPaymentDetailsDTO.getPaymentDetails()));
         supplierPaymentDetails.setSupplier(supplierMapper.supplierDtoToSupplier(supplierPaymentDetailsDTO.getSupplier()));
         return saveAndReturnDTO(supplierPaymentDetails);
@@ -72,7 +72,7 @@ public class SupplierPaymentDetailsServiceImpl implements SupplierPaymentDetails
                     }
                     return saveAndReturnDTO(supplierPaymentDetails);
                 })
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(() -> new ResourceNotFoundException("Not found supplier payment detail with id: " + id));
     }
 
     @Override

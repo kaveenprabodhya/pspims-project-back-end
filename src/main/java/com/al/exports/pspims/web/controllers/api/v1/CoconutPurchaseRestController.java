@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -23,6 +24,7 @@ public class CoconutPurchaseRestController {
     private static final Integer DEFAULT_PAGE_NUMBER = 0;
     private static final Integer DEFAULT_PAGE_SIZE = 25;
 
+    @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @GetMapping
     public ResponseEntity<Page<CoconutPurchaseDTO>> getAllCoconutPurchases(@RequestParam(value = "pageNumber", required = false) Integer pageNumber,
                                                                         @RequestParam(value = "pageSize", required = false) Integer pageSize){
@@ -40,30 +42,35 @@ public class CoconutPurchaseRestController {
         return new ResponseEntity<>(coconutPurchaseDTOS, HttpStatus.OK);
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @GetMapping({"/{id}"})
     public ResponseEntity<CoconutPurchaseDTO> getCoconutPurchaseById(@PathVariable UUID id){
         log.info("Fetching coconutPurchase with ID: {}", id);
         return new ResponseEntity<>(coconutPurchaseService.findById(id), HttpStatus.OK);
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @PostMapping
     public ResponseEntity<CoconutPurchaseDTO> createCoconutPurchase(@Valid @RequestBody CoconutPurchaseDTO coconutPurchaseDTOS){
         log.info("Creating coconutPurchase: {}", coconutPurchaseDTOS);
         return new ResponseEntity<>(coconutPurchaseService.create(coconutPurchaseDTOS), HttpStatus.CREATED);
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @PutMapping({"/{id}"})
     public ResponseEntity<CoconutPurchaseDTO> updateCoconutPurchase(@PathVariable UUID id,@Valid @RequestBody CoconutPurchaseDTO coconutPurchaseDTOS){
         log.info("Fully updating coconutPurchase with ID: {}", id);
         return new ResponseEntity<>(coconutPurchaseService.update(id, coconutPurchaseDTOS), HttpStatus.OK);
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @PatchMapping({"/{id}"})
     public ResponseEntity<CoconutPurchaseDTO> patchCoconutPurchase(@PathVariable UUID id, @Valid @RequestBody CoconutPurchaseDTO coconutPurchaseDTOS){
         log.info("Partial updating coconutPurchase with ID: {}", id);
         return new ResponseEntity<>(coconutPurchaseService.patch(id, coconutPurchaseDTOS), HttpStatus.OK);
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @DeleteMapping({"/{id}"})
     public ResponseEntity<Void> deleteCoconutPurchaseById(@PathVariable UUID id){
         log.warn("Deleting coconutPurchase with ID: {}", id);

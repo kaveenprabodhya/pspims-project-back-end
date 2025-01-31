@@ -15,6 +15,7 @@ public class SupplierDTO extends PersonDTO {
 
     private SupplierStatusEnum supplierStatus;
     private SupplierPaymentTermsEnum supplierPaymentTerms;
+    private AgentDTO agent;
     private Set<SupplierPaymentDetailsDTO> supplierPaymentDetails;
     private Set<CoconutPurchaseDTO> coconutPurchase;
 }

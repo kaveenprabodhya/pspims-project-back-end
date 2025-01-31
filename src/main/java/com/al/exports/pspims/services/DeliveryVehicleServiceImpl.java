@@ -31,7 +31,7 @@ public class DeliveryVehicleServiceImpl implements DeliveryVehicleService {
         return deliveryVehicleRepository
                 .findById(uuid)
                 .map(deliveryVehicleMapper::deliveryVehicleToDeliveryVehicleDTO)
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(() -> new ResourceNotFoundException("Not found delivery vehicle with id: " + uuid));
     }
 
     @Override
@@ -41,7 +41,7 @@ public class DeliveryVehicleServiceImpl implements DeliveryVehicleService {
 
     @Override
     public DeliveryVehicleDTO update(UUID id, DeliveryVehicleDTO deliveryVehicleDTO) {
-        DeliveryVehicle deliveryVehicle = deliveryVehicleRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        DeliveryVehicle deliveryVehicle = deliveryVehicleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found delivery vehicle with id: " + id));
         deliveryVehicle.setVehicleRegNo(deliveryVehicleDTO.getVehicleRegNo());
         deliveryVehicle.setVehicleType(deliveryVehicleDTO.getVehicleType());
         deliveryVehicle.setAvailabilityStatus(deliveryVehicleDTO.getAvailabilityStatus());
@@ -61,7 +61,7 @@ public class DeliveryVehicleServiceImpl implements DeliveryVehicleService {
                 deliveryVehicle.setAvailabilityStatus(deliveryVehicleDTO.getAvailabilityStatus());
             }
             return saveAndReturnDTO(deliveryVehicle);
-        }).orElseThrow(ResourceNotFoundException::new);
+        }).orElseThrow(() -> new ResourceNotFoundException("Not found delivery vehicle with id: " + id));
     }
 
     @Override
