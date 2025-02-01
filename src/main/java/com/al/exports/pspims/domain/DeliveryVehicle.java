@@ -7,6 +7,8 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.*;
 
+import java.math.BigInteger;
+
 @Setter
 @Getter
 @NoArgsConstructor
@@ -14,7 +16,7 @@ import lombok.*;
 @Builder
 @Entity
 public class DeliveryVehicle extends BaseEntity {
-    private String vehicleRegNo;
+    private BigInteger vehicleRegNo;
     @Enumerated(EnumType.STRING)
     private VehicleTypeEnum vehicleType;
     @Enumerated(EnumType.STRING)

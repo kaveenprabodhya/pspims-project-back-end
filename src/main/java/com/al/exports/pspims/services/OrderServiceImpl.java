@@ -49,7 +49,6 @@ public class OrderServiceImpl implements OrderService {
     public OrderDTO update(UUID id, OrderDTO orderDTO) {
         Order order = orderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found order with id: " + id));
         order.setOrderDate(orderDTO.getOrderDate());
-        order.setTotalOrderAmount(order.getTotalOrderAmount());
         order.setOrderStatus(order.getOrderStatus());
         order.setCoconutWaterProdOrder(coconutWaterProdOrderMapper.CoconutWaterProdOrderDtoToCoconutWaterProdOrder(orderDTO.getCoconutWaterProdOrder()));
         order.setVinegarProdOrder(vinegarProdOrderMapper.vinegarProdOrderDtoToVinegarProdOrder(orderDTO.getVinegarProdOrder()));
@@ -65,9 +64,6 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findById(id).map(order -> {
             if (orderDTO.getOrderDate() != null) {
                 order.setOrderDate(orderDTO.getOrderDate());
-            }
-            if (orderDTO.getTotalOrderAmount() != null) {
-                order.setTotalOrderAmount(order.getTotalOrderAmount());
             }
             if (orderDTO.getOrderStatus() != null) {
                 order.setOrderStatus(order.getOrderStatus());

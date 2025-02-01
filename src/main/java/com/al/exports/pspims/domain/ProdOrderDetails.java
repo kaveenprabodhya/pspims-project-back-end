@@ -18,6 +18,8 @@ public class ProdOrderDetails extends BaseEntity {
 
     private Date prodDate;
     private Float prodQuantity;
+    private Float pricePerUnit;
+    private Float totalAmount;
     @Enumerated(EnumType.STRING)
     private ProductionQuantityMeasureEnum productionQuantityMeasure;
     @Enumerated(EnumType.STRING)
@@ -26,9 +28,14 @@ public class ProdOrderDetails extends BaseEntity {
     private UUID batchNumber;
 
     @PrePersist
+    @PreUpdate
     public void generateBatchNO() {
         if (this.batchNumber == null) {
             this.batchNumber = UUID.randomUUID(); // Generate only if not set
+        }
+
+        if (prodQuantity != null && pricePerUnit != null) {
+            this.totalAmount = prodQuantity * pricePerUnit;
         }
     }
 }

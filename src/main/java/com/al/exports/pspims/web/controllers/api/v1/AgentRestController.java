@@ -21,7 +21,7 @@ import java.util.UUID;
 @RequestMapping(AgentRestController.BASE_URL)
 @RequiredArgsConstructor
 public class AgentRestController {
-    public static final String BASE_URL = "/api/v1/agent";
+    public static final String BASE_URL = "/api/v1/agents";
     private final AgentService agentService;
     private static final Integer DEFAULT_PAGE_NUMBER = 0;
     private static final Integer DEFAULT_PAGE_SIZE = 25;
@@ -53,11 +53,18 @@ public class AgentRestController {
         return new ResponseEntity<>(agentDTOS, HttpStatus.OK);
     }
 
-    @Secured("ROLE_ADMIN")
+    @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @GetMapping({"/{id}"})
     public ResponseEntity<AgentDTO> getAgentById(@PathVariable UUID id){
         log.info("Fetching agent with ID: {}", id);
         return new ResponseEntity<>(agentService.findById(id), HttpStatus.OK);
+    }
+
+    @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
+    @GetMapping("/byUsername")
+    public ResponseEntity<AgentDTO> getAgentByUsername(@RequestParam(value = "username") String username){
+        log.info("Fetching agent by Username: {}", username);
+        return new ResponseEntity<>(agentService.findByUsername(username), HttpStatus.OK);
     }
 
     @Secured("ROLE_ADMIN")
@@ -67,14 +74,14 @@ public class AgentRestController {
         return new ResponseEntity<>(agentService.create(agentDTO), HttpStatus.CREATED);
     }
 
-    @Secured("ROLE_ADMIN")
+    @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @PutMapping({"/{id}"})
     public ResponseEntity<AgentDTO> updateAgent(@PathVariable UUID id,@Valid @RequestBody AgentDTO agentDTO){
         log.info("Fully updating agent with ID: {}", id);
         return new ResponseEntity<>(agentService.update(id, agentDTO), HttpStatus.OK);
     }
 
-    @Secured("ROLE_ADMIN")
+    @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @PatchMapping({"/{id}"})
     public ResponseEntity<AgentDTO> patchAgent(@PathVariable UUID id, @Valid @RequestBody AgentDTO agentDTO){
         log.info("Partial updating agent with ID: {}", id);

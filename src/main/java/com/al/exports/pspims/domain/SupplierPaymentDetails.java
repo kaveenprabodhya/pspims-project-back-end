@@ -1,8 +1,6 @@
 package com.al.exports.pspims.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
@@ -12,7 +10,10 @@ import lombok.*;
 @Builder
 @Entity
 public class SupplierPaymentDetails extends BaseEntity {
-
+//
+//    @Enumerated(EnumType.STRING)
+//    private SupplierProductTypeEnum supplierProductType;
+//    private Float pricePerUnit;
     // one sp hv one sPD
     @OneToOne
     private PaymentDetails paymentDetails;

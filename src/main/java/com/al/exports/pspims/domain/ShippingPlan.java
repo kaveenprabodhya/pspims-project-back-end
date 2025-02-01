@@ -28,7 +28,7 @@ public class ShippingPlan extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ShippingStatusEnum shippingStatus;
     @Enumerated(EnumType.STRING)
-    private DeliveryTypeEnum deliveryTypeEnum;
+    private DeliveryTypeEnum deliveryType;
     // one sP hv one dV
     @OneToOne
     private DeliveryVehicle deliveryVehicle;

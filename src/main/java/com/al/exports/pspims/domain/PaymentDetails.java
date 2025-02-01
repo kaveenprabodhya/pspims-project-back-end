@@ -5,6 +5,7 @@ import com.al.exports.pspims.shared.enums.PaymentStatusEnum;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.PrePersist;
 import lombok.*;
 
 import java.math.BigInteger;
@@ -25,4 +26,11 @@ public class PaymentDetails extends BaseEntity {
     private BigInteger invoiceNo;
     @Enumerated(EnumType.STRING)
     private PaymentMethodEnum paymentMethod;
+
+    @PrePersist
+    private void generateInvoiceNumber() {
+        if (this.invoiceNo == null) {
+            this.invoiceNo = BigInteger.valueOf(System.currentTimeMillis());
+        }
+    }
 }

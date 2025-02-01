@@ -1,10 +1,7 @@
 package com.al.exports.pspims.domain;
 
 import com.al.exports.pspims.shared.enums.CoconutQualityGradeEnum;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
@@ -29,4 +26,12 @@ public class CoconutPurchase extends BaseEntity {
     //one sup to many
     @ManyToOne
     private Supplier supplier;
+
+    @PrePersist
+    @PreUpdate
+    private void calculateTotalPurchaseCost() {
+        if (purchaseQuantity != null && pricePerUnit != null) {
+            this.totalPurchaseCost = purchaseQuantity * pricePerUnit;
+        }
+    }
 }

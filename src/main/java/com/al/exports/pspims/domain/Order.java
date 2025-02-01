@@ -16,7 +16,6 @@ import java.util.Date;
 public class Order extends BaseEntity {
 
     private Date orderDate;
-    private Float totalOrderAmount;
     @Enumerated(EnumType.STRING)
     private OrderStatusEnum orderStatus;
 

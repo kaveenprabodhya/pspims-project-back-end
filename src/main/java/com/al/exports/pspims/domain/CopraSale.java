@@ -1,8 +1,6 @@
 package com.al.exports.pspims.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
@@ -15,7 +13,7 @@ import java.util.Date;
 @Entity
 public class CopraSale extends BaseEntity {
 
-    private Float saleQuantity;
+    private Integer saleQuantity;
     private Float pricePerQuantity;
     private Float totalSaleAmount;
     private Date saleDate;
@@ -29,4 +27,12 @@ public class CopraSale extends BaseEntity {
     // one copraSale hv one pD
     @OneToOne
     private PaymentDetails paymentDetails;
+
+    @PrePersist
+    @PreUpdate
+    private void calculateTotalSaleAmount() {
+        if (saleQuantity != null && pricePerQuantity != null) {
+            this.totalSaleAmount = saleQuantity * pricePerQuantity;
+        }
+    }
 }

@@ -12,10 +12,18 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Entity
 public class Customer extends Person {
+
+    @Builder
+    public Customer(String firstName, String lastName, String email, String address, CustomerType customerType, Float creditLimit, Agent agent, Set<Order> order, Set<CopraSale> copraSale) {
+        super(firstName, lastName, email, address);
+        this.customerType = customerType;
+        this.creditLimit = creditLimit;
+        this.agent = agent;
+        this.order = order;
+        this.copraSale = copraSale;
+    }
 
     private CustomerType customerType;
     private Float creditLimit;

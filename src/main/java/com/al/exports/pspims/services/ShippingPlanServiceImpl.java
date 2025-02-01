@@ -49,7 +49,7 @@ public class ShippingPlanServiceImpl implements ShippingPlanService {
         shippingPlan.setShippingType(shippingPlanDTO.getShippingType());
         shippingPlan.setTrackingNumber(shippingPlanDTO.getTrackingNumber());
         shippingPlan.setShippingStatus(shippingPlanDTO.getShippingStatus());
-        shippingPlan.setDeliveryTypeEnum(shippingPlanDTO.getDeliveryTypeEnum());
+        shippingPlan.setDeliveryType(shippingPlanDTO.getDeliveryType());
         shippingPlan.setDeliveryVehicle(deliveryVehicleMapper.deliveryVehicleDtoTODeliveryVehicle(shippingPlanDTO.getDeliveryVehicle()));
         return saveAndReturnDTO(shippingPlan);
     }
@@ -72,8 +72,8 @@ public class ShippingPlanServiceImpl implements ShippingPlanService {
             if (shippingPlanDTO.getShippingStatus() != null) {
                 shippingPlan.setShippingStatus(shippingPlanDTO.getShippingStatus());
             }
-            if (shippingPlanDTO.getDeliveryTypeEnum() != null) {
-                shippingPlan.setDeliveryTypeEnum(shippingPlanDTO.getDeliveryTypeEnum());
+            if (shippingPlanDTO.getDeliveryType() != null) {
+                shippingPlan.setDeliveryType(shippingPlanDTO.getDeliveryType());
             }
             if (shippingPlanDTO.getDeliveryVehicle() != null) {
                 shippingPlan.setDeliveryVehicle(deliveryVehicleMapper.deliveryVehicleDtoTODeliveryVehicle(shippingPlanDTO.getDeliveryVehicle()));
