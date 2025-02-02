@@ -2,8 +2,10 @@ package com.al.exports.pspims.services;
 
 import com.al.exports.pspims.domain.BeverageIngredients;
 import com.al.exports.pspims.repository.BeverageIngredientsRepository;
+import com.al.exports.pspims.repository.BeverageTypeRepository;
 import com.al.exports.pspims.shared.exceptions.ResourceNotFoundException;
 import com.al.exports.pspims.shared.mapper.BeverageIngredientsMapper;
+import com.al.exports.pspims.shared.mapper.BeverageTypeMapper;
 import com.al.exports.pspims.shared.model.BeverageIngredientsDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,6 +23,8 @@ public class BeverageIngredientsServiceImpl implements BeverageIngredientsServic
 
     private final BeverageIngredientsRepository beverageIngredientsRepository;
     private final BeverageIngredientsMapper beverageIngredientsMapper;
+    private final BeverageTypeMapper beverageTypeMapper;
+    private final BeverageTypeRepository beverageTypeRepository;
 
     @Override
     public Page<BeverageIngredientsDTO> findAll(Pageable pageable) {
@@ -39,7 +43,9 @@ public class BeverageIngredientsServiceImpl implements BeverageIngredientsServic
 
     @Override
     public BeverageIngredientsDTO create(BeverageIngredientsDTO beverageIngredientsDTO) {
-        return saveAndReturnDTO(beverageIngredientsMapper.beverageIngredientsDtoToBeverageIngredients(beverageIngredientsDTO));
+        BeverageIngredients beverageIngredients =
+                beverageIngredientsMapper.beverageIngredientsDtoToBeverageIngredients(beverageIngredientsDTO);
+        return saveAndReturnDTO(beverageIngredients);
     }
 
     @Override
@@ -50,6 +56,7 @@ public class BeverageIngredientsServiceImpl implements BeverageIngredientsServic
             beverageIngredients.setIngredientName(beverageIngredientsDTO.getIngredientName());
             beverageIngredients.setIngredientMeasure(beverageIngredientsDTO.getIngredientMeasure());
             beverageIngredients.setMeasureAmount(beverageIngredientsDTO.getMeasureAmount());
+            beverageIngredients.setBeverageType(beverageTypeMapper.BeverageTypeDtotoBeverageType(beverageIngredientsDTO.getBeverageType()));
             return saveAndReturnDTO(beverageIngredients);
         }
         else {
@@ -69,6 +76,9 @@ public class BeverageIngredientsServiceImpl implements BeverageIngredientsServic
                     }
                     if(beverageIngredientsDTO.getMeasureAmount() != null){
                         beverageIngredients.setMeasureAmount(beverageIngredientsDTO.getMeasureAmount());
+                    }
+                    if(beverageIngredientsDTO.getBeverageType() != null){
+                        beverageIngredients.setBeverageType(beverageTypeMapper.BeverageTypeDtotoBeverageType(beverageIngredientsDTO.getBeverageType()));
                     }
                     return saveAndReturnDTO(beverageIngredients);
                 }).orElseThrow(() -> new ResourceNotFoundException("Not found beverage ingredients with id: " + id));

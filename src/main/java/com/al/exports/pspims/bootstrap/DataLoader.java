@@ -62,11 +62,11 @@ public class DataLoader implements CommandLineRunner {
         if (inventory == 0) {
             loadInventory();
         }
-        if (bISize == 0) {
-            loadBeverageIngredients();
-        }
         if (bT == 0) {
             loadBeverageType();
+        }
+        if (bISize == 0) {
+            loadBeverageIngredients();
         }
         if (bPO == 0) {
             loadBeverageProdOrder();
@@ -125,24 +125,28 @@ public class DataLoader implements CommandLineRunner {
         agentRepository.save(newAdmin);
     }
 
-    private void loadBeverageIngredients(){
-        BeverageIngredients beverageIngredients = BeverageIngredients.builder()
-                .ingredientName("coconut milk")
-                .ingredientMeasure(IngredientMeasureEnum.GRAMS)
-                .measureAmount(350.0f)
-                .build();
+    private void loadBeverageIngredients() {
+        Optional<BeverageType> type = beverageTypeRepository.findAll().stream().findFirst();
+        if (type.isPresent()) {
+            BeverageIngredients beverageIngredients = BeverageIngredients.builder()
+                    .ingredientName("coconut milk")
+                    .ingredientMeasure(IngredientMeasureEnum.GRAMS)
+                    .measureAmount(350.0f)
+                    .beverageType(type.get())
+                    .build();
 
-        beverageIngredientsRepository.save(beverageIngredients);
+            beverageIngredientsRepository.save(beverageIngredients);
+        }
     }
 
-    private void loadBeverageProdOrder(){
+    private void loadBeverageProdOrder() {
 
         Optional<BeverageType> beverageType = beverageTypeRepository.findAll().stream().findFirst();
 
         ProdOrderDetails prodOrderDetails = getProdOrderDetails();
         prodOrderDetailsRepository.save(prodOrderDetails);
 
-        if(beverageType.isPresent()) {
+        if (beverageType.isPresent()) {
             BeverageProdOrder beverageProdOrder = BeverageProdOrder.builder()
                     .prodOrderDetails(prodOrderDetails)
                     .beverageType(beverageType.get())
@@ -151,29 +155,26 @@ public class DataLoader implements CommandLineRunner {
         }
     }
 
-    private void loadBeverageType(){
-        Optional<BeverageIngredients> beverageIngredients = beverageIngredientsRepository.findAll().stream().findFirst();
+    private void loadBeverageType() {
 
-        if(beverageIngredients.isPresent()) {
-            BeverageType beverageType = BeverageType.builder()
-                    .beverageName("Organic Coconut Water")
-                    .beverageDescription("Refreshing natural coconut water with no preservatives. Rich in electrolytes and essential minerals.")
-                    .isActive(true)
-                    .nutritionInfo("Per 500ml: Calories 45, Carbohydrates 11g, Sugars 8g, Potassium 600mg, Sodium 35mg")
-                    .beverageIngredients(beverageIngredients.get())
-                    .build();
+        BeverageType beverageType = BeverageType.builder()
+                .beverageName("Organic Coconut Water")
+                .beverageDescription("Refreshing natural coconut water with no preservatives. Rich in electrolytes and essential minerals.")
+                .isActive(true)
+                .nutritionInfo("Per 500ml: Calories 45, Carbohydrates 11g, Sugars 8g, Potassium 600mg, Sodium 35mg")
+                .build();
 
-            beverageTypeRepository.save(beverageType);
-        }
+        beverageTypeRepository.save(beverageType);
+
     }
 
-    private void loadCoconutPurchase(){
+    private void loadCoconutPurchase() {
 
         Optional<Inventory> inventory = inventoryRepository.findAll().stream().findFirst();
 
         Optional<Supplier> supplier = supplierRepository.findAll().stream().findFirst();
 
-        if(inventory.isPresent() && supplier.isPresent()) {
+        if (inventory.isPresent() && supplier.isPresent()) {
             CoconutPurchase coconutPurchase = CoconutPurchase.builder()
                     .purchaseDate(new Date())
                     .coconutQualityGrade(CoconutQualityGradeEnum.B)
@@ -187,7 +188,7 @@ public class DataLoader implements CommandLineRunner {
         }
     }
 
-    private void loadCoconutWaterProdOrder(){
+    private void loadCoconutWaterProdOrder() {
         ProdOrderDetails prodOrderDetails = this.getProdOrderDetails();
 
         prodOrderDetailsRepository.save(prodOrderDetails);
@@ -202,7 +203,7 @@ public class DataLoader implements CommandLineRunner {
     private void loadCopraSale() throws ParseException {
         Optional<Customer> customer = customerRepository.findAll().stream().findFirst();
 
-        if(customer.isPresent()) {
+        if (customer.isPresent()) {
 
             ShippingPlan shippingPlan = this.getShippingPlan();
             shippingPlanRepository.save(shippingPlan);
@@ -223,10 +224,10 @@ public class DataLoader implements CommandLineRunner {
         }
     }
 
-    private void loadCustomer(){
+    private void loadCustomer() {
         Optional<Agent> agent = agentRepository.findAll().stream().findFirst();
 
-        if(agent.isPresent()) {
+        if (agent.isPresent()) {
             Customer customer = Customer.builder()
                     .firstName("Joe")
                     .lastName("Joe")
@@ -241,7 +242,7 @@ public class DataLoader implements CommandLineRunner {
         }
     }
 
-    private void loadDeliveryVehicle(){
+    private void loadDeliveryVehicle() {
         DeliveryVehicle deliveryVehicle = DeliveryVehicle.builder()
                 .vehicleRegNo(BigInteger.valueOf(12_345_678))
                 .vehicleType(VehicleTypeEnum.CAR)
@@ -258,7 +259,7 @@ public class DataLoader implements CommandLineRunner {
         deliveryVehicleRepository.save(deliveryVehicle2);
     }
 
-    private void loadInventory(){
+    private void loadInventory() {
         Inventory inventory = Inventory.builder()
                 .inventoryItemType(InventoryItemTypeEnum.CONSUMABLE)
                 .inventoryQuantity(1000)
@@ -272,9 +273,9 @@ public class DataLoader implements CommandLineRunner {
 
     private void loadOrder() throws ParseException {
         Optional<Customer> customer = customerRepository.findAll().stream().findFirst();
-        if(customer.isPresent()) {
+        if (customer.isPresent()) {
             Optional<BeverageProdOrder> beverageProdOrder = beverageProdOrderRepository.findAll().stream().findFirst();
-            if(beverageProdOrder.isPresent()) {
+            if (beverageProdOrder.isPresent()) {
                 PaymentDetails paymentDetails = this.getPaymentDetails();
                 paymentDetails.setPaymentAmount(beverageProdOrder.get().getProdOrderDetails().getTotalAmount());
                 paymentDetailsRepository.save(paymentDetails);
@@ -283,7 +284,7 @@ public class DataLoader implements CommandLineRunner {
                 Date date = dateFormat.parse("12/12/2025");
 
                 Optional<DeliveryVehicle> deliveryVehicle = deliveryVehicleRepository.findAll().stream().skip(1).findFirst();
-                if(deliveryVehicle.isPresent()) {
+                if (deliveryVehicle.isPresent()) {
                     ShippingPlan shippingPlan = ShippingPlan.builder()
                             .shippingAddress("No 684, tg road, python")
                             .shippingDate(date)
@@ -313,7 +314,7 @@ public class DataLoader implements CommandLineRunner {
         }
     }
 
-    private PaymentDetails getPaymentDetails(){
+    private PaymentDetails getPaymentDetails() {
         return PaymentDetails.builder()
                 .paymentStatus(PaymentStatusEnum.PAID)
                 .paymentDate(new Date())
@@ -347,9 +348,9 @@ public class DataLoader implements CommandLineRunner {
                 .build()).orElse(null);
     }
 
-    private void loadSupplier(){
+    private void loadSupplier() {
         Optional<Agent> agent = agentRepository.findAll().stream().findFirst();
-        if(agent.isPresent()) {
+        if (agent.isPresent()) {
             Supplier supplier = Supplier.builder()
                     .firstName("Mary")
                     .lastName("Cooper")
@@ -364,11 +365,11 @@ public class DataLoader implements CommandLineRunner {
         }
     }
 
-    private void loadSupplierPaymentDetails(){
+    private void loadSupplierPaymentDetails() {
         Optional<Supplier> supplier = supplierRepository.findAll().stream().findFirst();
-        if(supplier.isPresent()) {
+        if (supplier.isPresent()) {
             Optional<CoconutPurchase> coconutPurchase = coconutPurchaseRepository.findAll().stream().findFirst();
-            if(coconutPurchase.isPresent()) {
+            if (coconutPurchase.isPresent()) {
                 PaymentDetails paymentDetails = this.getPaymentDetails();
                 paymentDetails.setPaymentAmount(coconutPurchase.get().getTotalPurchaseCost());
                 paymentDetailsRepository.save(paymentDetails);
@@ -382,7 +383,7 @@ public class DataLoader implements CommandLineRunner {
         }
     }
 
-    private void loadVinegarProdOrder(){
+    private void loadVinegarProdOrder() {
         ProdOrderDetails prodOrderDetails = this.getProdOrderDetails();
         prodOrderDetailsRepository.save(prodOrderDetails);
         VinegarProdOrder vinegarProdOrder = VinegarProdOrder.builder()

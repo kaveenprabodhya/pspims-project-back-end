@@ -21,5 +21,4 @@ public class BeverageTypeDTO extends BaseItem {
     private Boolean isActive;
     @NotBlank(message = "Nutrition information cannot be blank.")
     private String nutritionInfo;
-    private BeverageIngredientsDTO beverageIngredients;
 }

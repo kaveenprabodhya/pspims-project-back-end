@@ -6,7 +6,9 @@ import com.al.exports.pspims.shared.enums.SupplierStatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Timestamp;
 import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -15,10 +17,11 @@ import java.util.Set;
 public class Supplier extends Person {
 
     @Builder
-    public Supplier(String firstName, String lastName, String email, String address, SupplierStatusEnum supplierStatus,
+    public Supplier(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate, String firstName,
+                    String lastName, String email, String address, SupplierStatusEnum supplierStatus,
                     SupplierPaymentTermsEnum supplierPaymentTerms, Agent agent,
                     Set<SupplierPaymentDetails> supplierPaymentDetails, Set<CoconutPurchase> coconutPurchase) {
-        super(firstName, lastName, email, address);
+        super(id, version, createdDate, lastModifiedDate, firstName, lastName, email, address);
         this.supplierStatus = supplierStatus;
         this.supplierPaymentTerms = supplierPaymentTerms;
         this.agent = agent;

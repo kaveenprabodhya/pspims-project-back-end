@@ -8,14 +8,25 @@ import jakarta.persistence.Enumerated;
 import lombok.*;
 
 import java.math.BigInteger;
+import java.sql.Timestamp;
+import java.util.UUID;
 
 @Setter
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Entity
 public class DeliveryVehicle extends BaseEntity {
+
+    @Builder
+    public DeliveryVehicle(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate,
+                           BigInteger vehicleRegNo, VehicleTypeEnum vehicleType,
+                           VehicleAvailabilityStatusEnum availabilityStatus) {
+        super(id, version, createdDate, lastModifiedDate);
+        this.vehicleRegNo = vehicleRegNo;
+        this.vehicleType = vehicleType;
+        this.availabilityStatus = availabilityStatus;
+    }
+
     private BigInteger vehicleRegNo;
     @Enumerated(EnumType.STRING)
     private VehicleTypeEnum vehicleType;

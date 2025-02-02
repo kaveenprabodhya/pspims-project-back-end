@@ -16,6 +16,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 public class AgentDTO extends PersonDTO {
+
     @NotBlank(message = "Username is required and cannot be blank.")
     @Size(min = 4, max = 20, message = "Username must be between 4 and 20 characters.")
     private String username;

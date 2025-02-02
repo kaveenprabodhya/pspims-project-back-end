@@ -7,7 +7,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.*;
 
+import java.sql.Timestamp;
 import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -16,8 +18,10 @@ import java.util.Set;
 public class Customer extends Person {
 
     @Builder
-    public Customer(String firstName, String lastName, String email, String address, CustomerType customerType, Float creditLimit, Agent agent, Set<Order> order, Set<CopraSale> copraSale) {
-        super(firstName, lastName, email, address);
+    public Customer(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate, String firstName,
+                    String lastName, String email, String address, CustomerType customerType, Float creditLimit,
+                    Agent agent, Set<Order> order, Set<CopraSale> copraSale) {
+        super(id, version, createdDate, lastModifiedDate, firstName, lastName, email, address);
         this.customerType = customerType;
         this.creditLimit = creditLimit;
         this.agent = agent;

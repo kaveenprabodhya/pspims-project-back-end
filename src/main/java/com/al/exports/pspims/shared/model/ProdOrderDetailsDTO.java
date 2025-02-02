@@ -18,6 +18,7 @@ import java.util.UUID;
 @SuperBuilder
 public class ProdOrderDetailsDTO extends BaseItem {
 
+    @NotNull(message = "Production date is required.")
     @FutureOrPresent(message = "Production date cannot be in the past.")
     private Date prodDate;
     @Positive(message = "Production quantity must be a positive number.")
@@ -30,6 +31,6 @@ public class ProdOrderDetailsDTO extends BaseItem {
     private ProductionQuantityMeasureEnum productionQuantityMeasure;
     @NotNull(message = "Production status is required.")
     private ProdStatusEnum prodStatus;
-    @NotNull(message = "Batch number is required.")
+    @Setter(AccessLevel.NONE)
     private UUID batchNumber;
 }

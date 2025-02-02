@@ -5,16 +5,30 @@ import com.al.exports.pspims.shared.enums.ProductionQuantityMeasureEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.UUID;
 
 @Setter
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Entity
 public class ProdOrderDetails extends BaseEntity {
+
+    @Builder
+    public ProdOrderDetails(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate,
+                            Date prodDate, Float prodQuantity, Float pricePerUnit, Float totalAmount,
+                            ProductionQuantityMeasureEnum productionQuantityMeasure, ProdStatusEnum prodStatus,
+                            UUID batchNumber) {
+        super(id, version, createdDate, lastModifiedDate);
+        this.prodDate = prodDate;
+        this.prodQuantity = prodQuantity;
+        this.pricePerUnit = pricePerUnit;
+        this.totalAmount = totalAmount;
+        this.productionQuantityMeasure = productionQuantityMeasure;
+        this.prodStatus = prodStatus;
+        this.batchNumber = batchNumber;
+    }
 
     private Date prodDate;
     private Float prodQuantity;

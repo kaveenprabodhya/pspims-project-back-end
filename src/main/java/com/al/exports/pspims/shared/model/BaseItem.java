@@ -22,7 +22,4 @@ public class BaseItem {
 
     private Timestamp lastModifiedDate;
 
-    public boolean isNew() {
-        return this.id == null;
-    }
 }

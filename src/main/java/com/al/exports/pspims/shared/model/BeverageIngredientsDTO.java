@@ -20,4 +20,5 @@ public class BeverageIngredientsDTO extends BaseItem {
     private Float measureAmount;
     @NotNull(message = "Ingredient measure cannot be null.")
     private IngredientMeasureEnum ingredientMeasure;
+    private BeverageTypeDTO beverageType;
 }

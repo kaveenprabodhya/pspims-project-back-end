@@ -48,7 +48,6 @@ public class BeverageTypeServiceImpl implements BeverageTypeService {
         beverageType.setBeverageName(beverageTypeDTO.getBeverageName());
         beverageType.setBeverageDescription(beverageTypeDTO.getBeverageDescription());
         beverageType.setIsActive(beverageTypeDTO.getIsActive());
-        beverageType.setBeverageIngredients(beverageIngredientsMapper.beverageIngredientsDtoToBeverageIngredients(beverageTypeDTO.getBeverageIngredients()));
         return saveAndReturnDTO(beverageType);
     }
 
@@ -63,9 +62,6 @@ public class BeverageTypeServiceImpl implements BeverageTypeService {
             }
             if(beverageTypeDTO.getIsActive() != null){
                 beverageType.setIsActive(beverageTypeDTO.getIsActive());
-            }
-            if(beverageTypeDTO.getBeverageIngredients() != null){
-                beverageType.setBeverageIngredients(beverageIngredientsMapper.beverageIngredientsDtoToBeverageIngredients(beverageTypeDTO.getBeverageIngredients()));
             }
             return saveAndReturnDTO(beverageType);
         }).orElseThrow(() -> new ResourceNotFoundException("Not found beverage type with id: " + id));

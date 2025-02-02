@@ -9,9 +9,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
+import java.util.UUID;
 
 @Setter
 @Getter
@@ -20,13 +22,14 @@ import java.util.Set;
 public class Agent  extends Person implements UserDetails {
 
     @Builder
-    public Agent(String firstName, String lastName, String email, String address, String username, String password,
-                 Role role, AgentDepartmentTypeEnum agentDepartment, Float performanceRate, String apiKey,
+    public Agent(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate, String firstName,
+                 String lastName, String email, String address, String username, String password, Role role,
+                 AgentDepartmentTypeEnum agentDepartment, Float performanceRate, String apiKey,
                  Set<Customer> customers, Set<Supplier> suppliers) {
-        super(firstName, lastName, email, address);
+        super(id, version, createdDate, lastModifiedDate, firstName, lastName, email, address);
         this.username = username;
         this.password = password;
-        this.role = role;;
+        this.role = role;
         this.agentDepartment = agentDepartment;
         this.performanceRate = performanceRate;
         this.apiKey = apiKey;
