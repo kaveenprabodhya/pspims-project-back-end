@@ -5,30 +5,31 @@ import com.al.exports.pspims.shared.enums.ProductionQuantityMeasureEnum;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 import java.util.UUID;
 
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-@Data
+@AllArgsConstructor
+@Getter
+@Setter
+@SuperBuilder
 public class ProdOrderDetailsDTO extends BaseItem {
 
-    @FutureOrPresent
+    @FutureOrPresent(message = "Production date cannot be in the past.")
     private Date prodDate;
-    @Positive
+    @Positive(message = "Production quantity must be a positive number.")
     private Float prodQuantity;
-    @Positive
+    @Positive(message = "Price per unit must be a positive number.")
     private Float pricePerUnit;
-    @Positive
+    @Setter(AccessLevel.NONE)
     private Float totalAmount;
-    @NotNull
+    @NotNull(message = "Production quantity measure is required.")
     private ProductionQuantityMeasureEnum productionQuantityMeasure;
-    @NotNull
+    @NotNull(message = "Production status is required.")
     private ProdStatusEnum prodStatus;
-    @NotNull
+    @NotNull(message = "Batch number is required.")
     private UUID batchNumber;
 }

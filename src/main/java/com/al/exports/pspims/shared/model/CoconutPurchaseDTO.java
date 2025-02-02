@@ -4,26 +4,27 @@ import com.al.exports.pspims.shared.enums.CoconutQualityGradeEnum;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Positive;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-@Data
+@AllArgsConstructor
+@Getter
+@Setter
+@SuperBuilder
 public class CoconutPurchaseDTO extends BaseItem {
 
-    @Positive
+    @Positive(message = "Purchase quantity must be a positive number.")
     private Integer purchaseQuantity;
-    @Positive
+    @Positive(message = "Price per unit must be a positive number.")
     private Float pricePerUnit;
-    @Positive
+    @Setter(AccessLevel.NONE)
     private Float totalPurchaseCost;
-    @PastOrPresent
+    @PastOrPresent(message = "Purchase date cannot be in the future.")
     private Date purchaseDate;
-    @NotNull
+    @NotNull(message = "Coconut quality grade is required.")
     private CoconutQualityGradeEnum coconutQualityGrade;
     private InventoryDTO inventory;
     private SupplierDTO supplier;

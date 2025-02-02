@@ -3,22 +3,21 @@ package com.al.exports.pspims.shared.model;
 import com.al.exports.pspims.shared.enums.CustomerType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Set;
 
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@SuperBuilder
 public class CustomerDTO extends PersonDTO {
 
-    @NotNull
+    @NotNull(message = "Customer type is required.")
     private CustomerType customerType;
-    @PositiveOrZero
+    @PositiveOrZero(message = "Credit limit must be zero or a positive number.")
     private Float creditLimit;
     private AgentDTO agent;
-    private Set<OrderDTO> order;
-    private Set<CopraSaleDTO> copraSale;
 }

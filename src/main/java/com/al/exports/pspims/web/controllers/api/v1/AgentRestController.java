@@ -2,6 +2,8 @@ package com.al.exports.pspims.web.controllers.api.v1;
 
 import com.al.exports.pspims.services.AgentService;
 import com.al.exports.pspims.shared.model.AgentDTO;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -76,14 +78,18 @@ public class AgentRestController {
 
     @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @PutMapping({"/{id}"})
-    public ResponseEntity<AgentDTO> updateAgent(@PathVariable UUID id,@Valid @RequestBody AgentDTO agentDTO){
+    public ResponseEntity<AgentDTO> updateAgent(@PathVariable UUID id, @Valid @RequestBody AgentDTO agentDTO){
         log.info("Fully updating agent with ID: {}", id);
         return new ResponseEntity<>(agentService.update(id, agentDTO), HttpStatus.OK);
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @PatchMapping({"/{id}"})
-    public ResponseEntity<AgentDTO> patchAgent(@PathVariable UUID id, @Valid @RequestBody AgentDTO agentDTO){
+    public ResponseEntity<AgentDTO> patchAgent(@PathVariable UUID id, @Valid @RequestBody Object updates){
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        AgentDTO agentDTO = objectMapper.convertValue(updates, AgentDTO.class);
         log.info("Partial updating agent with ID: {}", id);
         return new ResponseEntity<>(agentService.patch(id, agentDTO), HttpStatus.OK);
     }

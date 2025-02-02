@@ -4,6 +4,8 @@ import com.al.exports.pspims.domain.Agent;
 import com.al.exports.pspims.repository.AgentRepository;
 import com.al.exports.pspims.shared.exceptions.ResourceNotFoundException;
 import com.al.exports.pspims.shared.mapper.AgentMapper;
+import com.al.exports.pspims.shared.mapper.CustomerMapper;
+import com.al.exports.pspims.shared.mapper.SupplierMapper;
 import com.al.exports.pspims.shared.model.AgentDTO;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j

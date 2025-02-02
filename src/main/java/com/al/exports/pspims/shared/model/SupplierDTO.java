@@ -3,22 +3,21 @@ package com.al.exports.pspims.shared.model;
 import com.al.exports.pspims.shared.enums.SupplierPaymentTermsEnum;
 import com.al.exports.pspims.shared.enums.SupplierStatusEnum;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Set;
 
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-@Data
+@AllArgsConstructor
+@Getter
+@Setter
+@SuperBuilder
 public class SupplierDTO extends PersonDTO {
 
-    @NotNull
+    @NotNull(message = "Supplier status is required.")
     private SupplierStatusEnum supplierStatus;
-    @NotNull
+    @NotNull(message = "Supplier payment terms are required.")
     private SupplierPaymentTermsEnum supplierPaymentTerms;
     private AgentDTO agent;
-    private Set<SupplierPaymentDetailsDTO> supplierPaymentDetails;
-    private Set<CoconutPurchaseDTO> coconutPurchase;
 }

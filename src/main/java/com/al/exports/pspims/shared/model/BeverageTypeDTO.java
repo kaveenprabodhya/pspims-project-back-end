@@ -2,25 +2,24 @@ package com.al.exports.pspims.shared.model;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-import java.util.Set;
 
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@SuperBuilder
 public class BeverageTypeDTO extends BaseItem {
 
-    @NotBlank
+    @NotBlank(message = "Beverage name cannot be blank.")
     private String beverageName;
-    @NotBlank
+    @NotBlank(message = "Beverage description cannot be blank.")
     private String beverageDescription;
-    @NotNull
+    @NotNull(message = "Beverage status (active/inactive) is required.")
     private Boolean isActive;
-    @NotBlank
+    @NotBlank(message = "Nutrition information cannot be blank.")
     private String nutritionInfo;
     private BeverageIngredientsDTO beverageIngredients;
-    private Set<BeverageProdOrderDTO> beverageProdOrder;
 }

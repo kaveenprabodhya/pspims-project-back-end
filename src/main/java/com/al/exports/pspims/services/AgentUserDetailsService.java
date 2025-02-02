@@ -16,6 +16,6 @@ public class AgentUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return agentRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Agent not found: " + username));
+                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
     }
 }

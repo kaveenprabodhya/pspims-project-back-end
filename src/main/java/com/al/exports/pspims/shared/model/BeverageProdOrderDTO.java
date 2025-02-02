@@ -2,17 +2,18 @@ package com.al.exports.pspims.shared.model;
 
 
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@SuperBuilder
 public class BeverageProdOrderDTO extends BaseItem {
 
-    @NotNull
+    @NotNull(message = "Production order details cannot be null.")
     private ProdOrderDetailsDTO prodOrderDetails;
-    @NotNull
+    @NotNull(message = "Beverage type cannot be null.")
     private BeverageTypeDTO beverageType;
 }

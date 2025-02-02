@@ -6,29 +6,30 @@ import com.al.exports.pspims.shared.enums.ShippingTypeEnum;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 import java.util.UUID;
 
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-@Data
+@AllArgsConstructor
+@Getter
+@Setter
+@SuperBuilder
 public class ShippingPlanDTO extends BaseItem {
 
-    @NotBlank
+    @NotBlank(message = "Shipping address cannot be blank.")
     private String shippingAddress;
-    @FutureOrPresent
+    @FutureOrPresent(message = "Shipping date cannot be in the past.")
     private Date shippingDate;
-    @NotNull
+    @NotNull(message = "Tracking number is required.")
     private UUID trackingNumber;
-    @NotNull
+    @NotNull(message = "Shipping type is required.")
     private ShippingTypeEnum shippingType;
-    @NotNull
+    @NotNull(message = "Shipping status is required.")
     private ShippingStatusEnum shippingStatus;
-    @NotNull
+    @NotNull(message = "Delivery type is required.")
     private DeliveryTypeEnum deliveryType;
     private DeliveryVehicleDTO deliveryVehicle;
 }

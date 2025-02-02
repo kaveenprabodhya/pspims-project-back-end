@@ -2,6 +2,8 @@ package com.al.exports.pspims.web.controllers.api.v1;
 
 import com.al.exports.pspims.services.BeverageProdOrderService;
 import com.al.exports.pspims.shared.model.BeverageProdOrderDTO;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -64,7 +66,11 @@ public class BeverageProdOrderRestController {
 
     @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @PatchMapping({"/{id}"})
-    public ResponseEntity<BeverageProdOrderDTO> patchBeverageProdOrder(@PathVariable UUID id, @Valid @RequestBody BeverageProdOrderDTO beverageProdOrderDTOS){
+    public ResponseEntity<BeverageProdOrderDTO> patchBeverageProdOrder(@PathVariable UUID id, @Valid @RequestBody Object updates){
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        BeverageProdOrderDTO beverageProdOrderDTOS = objectMapper.convertValue(updates, BeverageProdOrderDTO.class);
         log.info("Partial updating beverageProdOrder with ID: {}", id);
         return new ResponseEntity<>(beverageProdOrderService.patch(id, beverageProdOrderDTOS), HttpStatus.OK);
     }

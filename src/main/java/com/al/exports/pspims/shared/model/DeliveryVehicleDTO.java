@@ -4,21 +4,22 @@ import com.al.exports.pspims.shared.enums.VehicleAvailabilityStatusEnum;
 import com.al.exports.pspims.shared.enums.VehicleTypeEnum;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigInteger;
 
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-@Data
+@AllArgsConstructor
+@Getter
+@Setter
+@SuperBuilder
 public class DeliveryVehicleDTO extends BaseItem {
 
-    @NotBlank
+    @NotBlank(message = "Vehicle registration number cannot be blank.")
     private BigInteger vehicleRegNo;
-    @NotBlank
+    @NotNull(message = "Vehicle type cannot be null.")
     private VehicleTypeEnum vehicleType;
-    @NotNull
+    @NotNull(message = "Availability status is required.")
     private VehicleAvailabilityStatusEnum availabilityStatus;
 }

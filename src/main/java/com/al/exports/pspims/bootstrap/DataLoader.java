@@ -5,7 +5,6 @@ import com.al.exports.pspims.repository.*;
 import com.al.exports.pspims.shared.enums.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;

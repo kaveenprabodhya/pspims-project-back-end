@@ -1,14 +1,17 @@
 package com.al.exports.pspims.shared.model;
 
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.sql.Timestamp;
 import java.util.UUID;
 
 @NoArgsConstructor
-@Data
+@AllArgsConstructor
+@Getter
+@Setter
+@SuperBuilder
 public class BaseItem {
 
     private UUID id;

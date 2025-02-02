@@ -2,22 +2,23 @@ package com.al.exports.pspims.shared.model;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-@Data
+@AllArgsConstructor
+@Getter
+@Setter
+@SuperBuilder
 public class PersonDTO extends BaseItem {
 
-    @NotBlank
+    @NotBlank(message = "First name is required.")
     private String firstName;
-    @NotBlank
+    @NotBlank(message = "Last name is required.")
     private String lastName;
-    @Email
-    @NotBlank
+    @Email(message = "Invalid email format.")
+    @NotBlank(message = "Email is required.")
     private String email;
-    @NotBlank
+    @NotBlank(message = "Address cannot be blank.")
     private String address;
 }

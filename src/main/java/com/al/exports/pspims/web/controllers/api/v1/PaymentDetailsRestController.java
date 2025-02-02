@@ -2,6 +2,8 @@ package com.al.exports.pspims.web.controllers.api.v1;
 
 import com.al.exports.pspims.services.PaymentDetailsService;
 import com.al.exports.pspims.shared.model.PaymentDetailsDTO;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +29,9 @@ public class PaymentDetailsRestController {
     @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @GetMapping
     public ResponseEntity<Page<PaymentDetailsDTO>> getAllPaymentDetails(@RequestParam(value = "pageNumber", required = false) Integer pageNumber,
-                                                                       @RequestParam(value = "pageSize", required = false) Integer pageSize){
+                                                                        @RequestParam(value = "pageSize", required = false) Integer pageSize) {
 
-        if (pageNumber == null || pageNumber < 0){
+        if (pageNumber == null || pageNumber < 0) {
             pageNumber = DEFAULT_PAGE_NUMBER;
         }
 
@@ -44,35 +46,39 @@ public class PaymentDetailsRestController {
 
     @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @GetMapping({"/{id}"})
-    public ResponseEntity<PaymentDetailsDTO> getPaymentDetailsById(@PathVariable UUID id){
+    public ResponseEntity<PaymentDetailsDTO> getPaymentDetailsById(@PathVariable UUID id) {
         log.info("Fetching paymentDetail with ID: {}", id);
         return new ResponseEntity<>(paymentDetailsService.findById(id), HttpStatus.OK);
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @PostMapping
-    public ResponseEntity<PaymentDetailsDTO> createPaymentDetails(@Valid @RequestBody PaymentDetailsDTO paymentDetailsDTOS){
+    public ResponseEntity<PaymentDetailsDTO> createPaymentDetails(@Valid @RequestBody PaymentDetailsDTO paymentDetailsDTOS) {
         log.info("Creating paymentDetail: {}", paymentDetailsDTOS);
         return new ResponseEntity<>(paymentDetailsService.create(paymentDetailsDTOS), HttpStatus.CREATED);
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @PutMapping({"/{id}"})
-    public ResponseEntity<PaymentDetailsDTO> updatePaymentDetails(@PathVariable UUID id,@Valid @RequestBody PaymentDetailsDTO paymentDetailsDTOS){
+    public ResponseEntity<PaymentDetailsDTO> updatePaymentDetails(@PathVariable UUID id, @Valid @RequestBody PaymentDetailsDTO paymentDetailsDTOS) {
         log.info("Fully updating paymentDetail with ID: {}", id);
         return new ResponseEntity<>(paymentDetailsService.update(id, paymentDetailsDTOS), HttpStatus.OK);
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @PatchMapping({"/{id}"})
-    public ResponseEntity<PaymentDetailsDTO> patchPaymentDetails(@PathVariable UUID id, @Valid @RequestBody PaymentDetailsDTO paymentDetailsDTOS){
+    public ResponseEntity<PaymentDetailsDTO> patchPaymentDetails(@PathVariable UUID id, @Valid @RequestBody Object updates) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        PaymentDetailsDTO paymentDetailsDTOS = objectMapper.convertValue(updates, PaymentDetailsDTO.class);
         log.info("Partial updating paymentDetail with ID: {}", id);
         return new ResponseEntity<>(paymentDetailsService.patch(id, paymentDetailsDTOS), HttpStatus.OK);
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @DeleteMapping({"/{id}"})
-    public ResponseEntity<Void> deletePaymentDetailsById(@PathVariable UUID id){
+    public ResponseEntity<Void> deletePaymentDetailsById(@PathVariable UUID id) {
         log.warn("Deleting paymentDetail with ID: {}", id);
         paymentDetailsService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);

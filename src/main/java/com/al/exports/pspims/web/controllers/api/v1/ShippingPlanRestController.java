@@ -2,6 +2,8 @@ package com.al.exports.pspims.web.controllers.api.v1;
 
 import com.al.exports.pspims.services.ShippingPlanService;
 import com.al.exports.pspims.shared.model.ShippingPlanDTO;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +29,9 @@ public class ShippingPlanRestController {
     @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @GetMapping
     public ResponseEntity<Page<ShippingPlanDTO>> getAllShippingPlans(@RequestParam(value = "pageNumber", required = false) Integer pageNumber,
-                                                                     @RequestParam(value = "pageSize", required = false) Integer pageSize){
+                                                                     @RequestParam(value = "pageSize", required = false) Integer pageSize) {
 
-        if (pageNumber == null || pageNumber < 0){
+        if (pageNumber == null || pageNumber < 0) {
             pageNumber = DEFAULT_PAGE_NUMBER;
         }
 
@@ -44,35 +46,39 @@ public class ShippingPlanRestController {
 
     @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @GetMapping({"/{id}"})
-    public ResponseEntity<ShippingPlanDTO> getShippingPlanById(@PathVariable UUID id){
+    public ResponseEntity<ShippingPlanDTO> getShippingPlanById(@PathVariable UUID id) {
         log.info("Fetching shippingPlan with ID: {}", id);
         return new ResponseEntity<>(shippingPlanService.findById(id), HttpStatus.OK);
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @PostMapping
-    public ResponseEntity<ShippingPlanDTO> createShippingPlan(@Valid @RequestBody ShippingPlanDTO shippingPlanDTOS){
+    public ResponseEntity<ShippingPlanDTO> createShippingPlan(@Valid @RequestBody ShippingPlanDTO shippingPlanDTOS) {
         log.info("Creating shippingPlan: {}", shippingPlanDTOS);
         return new ResponseEntity<>(shippingPlanService.create(shippingPlanDTOS), HttpStatus.CREATED);
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @PutMapping({"/{id}"})
-    public ResponseEntity<ShippingPlanDTO> updateShippingPlan(@PathVariable UUID id,@Valid @RequestBody ShippingPlanDTO shippingPlanDTOS){
+    public ResponseEntity<ShippingPlanDTO> updateShippingPlan(@PathVariable UUID id, @Valid @RequestBody ShippingPlanDTO shippingPlanDTOS) {
         log.info("Fully updating shippingPlan with ID: {}", id);
         return new ResponseEntity<>(shippingPlanService.update(id, shippingPlanDTOS), HttpStatus.OK);
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @PatchMapping({"/{id}"})
-    public ResponseEntity<ShippingPlanDTO> patchShippingPlan(@PathVariable UUID id, @Valid @RequestBody ShippingPlanDTO shippingPlanDTOS){
+    public ResponseEntity<ShippingPlanDTO> patchShippingPlan(@PathVariable UUID id, @Valid @RequestBody Object updates) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        ShippingPlanDTO shippingPlanDTOS = objectMapper.convertValue(updates, ShippingPlanDTO.class);
         log.info("Partial updating shippingPlan with ID: {}", id);
         return new ResponseEntity<>(shippingPlanService.patch(id, shippingPlanDTOS), HttpStatus.OK);
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @DeleteMapping({"/{id}"})
-    public ResponseEntity<Void> deleteShippingPlanById(@PathVariable UUID id){
+    public ResponseEntity<Void> deleteShippingPlanById(@PathVariable UUID id) {
         log.warn("Deleting shippingPlan with ID: {}", id);
         shippingPlanService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);

@@ -2,17 +2,18 @@ package com.al.exports.pspims.shared.model;
 
 import com.al.exports.pspims.shared.enums.FermentationTypeEnum;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-@Data
+@AllArgsConstructor
+@Getter
+@Setter
+@SuperBuilder
 public class VinegarProdOrderDTO extends BaseItem {
 
-    @NotNull
+    @NotNull(message = "Production order details cannot be null.")
     private ProdOrderDetailsDTO prodOrderDetails;
-    @NotNull
+    @NotNull(message = "Fermentation type cannot be null.")
     private FermentationTypeEnum fermentationType;
 }

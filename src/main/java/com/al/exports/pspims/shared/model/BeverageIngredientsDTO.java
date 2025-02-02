@@ -5,16 +5,19 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-@Data
+@AllArgsConstructor
+@Getter
+@Setter
+@SuperBuilder
 public class BeverageIngredientsDTO extends BaseItem {
 
-    @NotBlank
+    @NotBlank(message = "Ingredient name cannot be blank.")
     private String ingredientName;
-    @Positive
+    @Positive(message = "Measure amount must be a positive number.")
     private Float measureAmount;
-    @NotNull
+    @NotNull(message = "Ingredient measure cannot be null.")
     private IngredientMeasureEnum ingredientMeasure;
 }

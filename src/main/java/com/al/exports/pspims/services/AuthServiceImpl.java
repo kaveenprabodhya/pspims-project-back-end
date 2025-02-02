@@ -54,15 +54,13 @@ public class AuthServiceImpl implements AuthService {
         try {
             agentService.findByUsername(agentDTO.getUsername());
             throw new UsernameAlreadyTakenException("Username is already taken.");
-        } catch (ResourceNotFoundException e){
+        } catch (ResourceNotFoundException ignored){
         }
         AgentDTO createdAgentDTO = agentService.create(agentDTO);
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(createdAgentDTO.getUsername());
 
         String token = jwtUtil.generateToken(userDetails);
-
-        createdAgentDTO.setApiKey(token);
 
         agentService.update(token, createdAgentDTO.getId());
 
