@@ -3,6 +3,7 @@ package com.al.exports.pspims.services;
 import com.al.exports.pspims.shared.exceptions.ResourceNotFoundException;
 import com.al.exports.pspims.shared.exceptions.UsernameAlreadyTakenException;
 import com.al.exports.pspims.shared.model.AgentDTO;
+import com.al.exports.pspims.shared.model.AuthDTO;
 import com.al.exports.pspims.shared.utils.JwtUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Transactional
     @Override
-    public String login(String username, String password) {
+    public AuthDTO login(String username, String password) {
         AgentDTO agentDTO = agentService.findByUsername(username);
 
         if (agentDTO == null) {
@@ -45,12 +46,12 @@ public class AuthServiceImpl implements AuthService {
 
         agentService.update(token, agentDTO.getId());
 
-        return token;
+        return new AuthDTO(token, agentDTO.getId(), username);
     }
 
     @Transactional
     @Override
-    public String signup(AgentDTO agentDTO) {
+    public AuthDTO signup(AgentDTO agentDTO) {
         try {
             agentService.findByUsername(agentDTO.getUsername());
             throw new UsernameAlreadyTakenException("Username is already taken.");
@@ -64,6 +65,6 @@ public class AuthServiceImpl implements AuthService {
 
         agentService.update(token, createdAgentDTO.getId());
 
-        return token;
+        return new AuthDTO(token, agentDTO.getId(), agentDTO.getUsername());
     }
 }

@@ -1,9 +1,10 @@
 package com.al.exports.pspims.services;
 
 import com.al.exports.pspims.shared.model.AgentDTO;
+import com.al.exports.pspims.shared.model.AuthDTO;
 
 public interface AuthService {
-    public String login(String username, String password);
+    public AuthDTO login(String username, String password);
 
-    public String signup(AgentDTO agentDTO);
+    public AuthDTO signup(AgentDTO agentDTO);
 }

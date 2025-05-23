@@ -4,6 +4,7 @@ import com.al.exports.pspims.services.AuthService;
 import com.al.exports.pspims.shared.enums.AgentDepartmentTypeEnum;
 import com.al.exports.pspims.shared.enums.Role;
 import com.al.exports.pspims.shared.model.AgentDTO;
+import com.al.exports.pspims.shared.model.AuthDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,14 +20,14 @@ public class AuthController {
     public static final String BASE_URL = "/api/v1/auth";
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password) {
-        String token = authenticationService.login(username, password);
+    public ResponseEntity<AuthDTO> login(@RequestParam String username, @RequestParam String password) {
+        AuthDTO token = authenticationService.login(username, password);
         return ResponseEntity.ok(token);
     }
 
     @Secured("ROLE_ADMIN")
     @PostMapping("/signup")
-    public ResponseEntity<String> signup(@RequestParam String username, @RequestParam String password,
+    public ResponseEntity<AuthDTO> signup(@RequestParam String username, @RequestParam String password,
                                          @RequestParam String firstName, @RequestParam String lastName,
                                          @Valid @RequestParam String email, @RequestParam String address,
                                          @RequestParam Role role, @RequestParam AgentDepartmentTypeEnum agentDepartmentType) {
@@ -42,7 +43,7 @@ public class AuthController {
         agentDTO.setRole(role);
         agentDTO.setAgentDepartment(agentDepartmentType);
 
-        String token = authenticationService.signup(agentDTO);
+        AuthDTO token = authenticationService.signup(agentDTO);
 
         return new ResponseEntity<>(token, HttpStatus.CREATED);
     }
