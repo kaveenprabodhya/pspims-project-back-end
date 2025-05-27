@@ -31,6 +31,5 @@ public class ProdOrderDetailsDTO extends BaseItem {
     private ProductionQuantityMeasureEnum productionQuantityMeasure;
     @NotNull(message = "Production status is required.")
     private ProdStatusEnum prodStatus;
-    @Setter(AccessLevel.NONE)
     private UUID batchNumber;
 }

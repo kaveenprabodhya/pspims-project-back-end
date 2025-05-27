@@ -44,7 +44,7 @@ public class PaymentDetailsServiceImpl implements PaymentDetailsService {
         paymentDetails.setPaymentStatus(paymentDetailsDTO.getPaymentStatus());
         paymentDetails.setPaymentAmount(paymentDetailsDTO.getPaymentAmount());
         paymentDetails.setPaymentDate(paymentDetailsDTO.getPaymentDate());
-        paymentDetails.setInvoiceNo(paymentDetailsDTO.getInvoiceNo());
+//        paymentDetails.setInvoiceNo(paymentDetailsDTO.getInvoiceNo());
         paymentDetails.setPaymentMethod(paymentDetailsDTO.getPaymentMethod());
         return saveAndReturnDTO(paymentDetails);
     }
@@ -63,9 +63,9 @@ public class PaymentDetailsServiceImpl implements PaymentDetailsService {
                     if (paymentDetailsDTO.getPaymentDate() != null) {
                         paymentDetails.setPaymentDate(paymentDetailsDTO.getPaymentDate());
                     }
-                    if (paymentDetailsDTO.getInvoiceNo() != null) {
-                        paymentDetails.setInvoiceNo(paymentDetailsDTO.getInvoiceNo());
-                    }
+//                    if (paymentDetailsDTO.getInvoiceNo() != null) {
+//                        paymentDetails.setInvoiceNo(paymentDetailsDTO.getInvoiceNo());
+//                    }
                     if (paymentDetailsDTO.getPaymentMethod() != null) {
                         paymentDetails.setPaymentMethod(paymentDetailsDTO.getPaymentMethod());
                     }

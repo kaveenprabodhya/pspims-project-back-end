@@ -42,7 +42,6 @@ public class ProdOrderDetailsServiceImpl implements ProdOrderDetailsService {
         prodOrderDetails.setProdQuantity(prodOrderDetailsDTO.getProdQuantity());
         prodOrderDetails.setProdDate(prodOrderDetailsDTO.getProdDate());
         prodOrderDetails.setProductionQuantityMeasure(prodOrderDetailsDTO.getProductionQuantityMeasure());
-        prodOrderDetails.setBatchNumber(prodOrderDetailsDTO.getBatchNumber());
         prodOrderDetails.setProdStatus(prodOrderDetailsDTO.getProdStatus());
         return saveAndReturnDTO(prodOrderDetails);
     }
@@ -60,9 +59,6 @@ public class ProdOrderDetailsServiceImpl implements ProdOrderDetailsService {
                     }
                     if (prodOrderDetailsDTO.getProductionQuantityMeasure() != null) {
                         prodOrderDetails.setProductionQuantityMeasure(prodOrderDetailsDTO.getProductionQuantityMeasure());
-                    }
-                    if (prodOrderDetailsDTO.getBatchNumber() != null) {
-                        prodOrderDetails.setBatchNumber(prodOrderDetailsDTO.getBatchNumber());
                     }
                     if (prodOrderDetailsDTO.getProdStatus() != null) {
                         prodOrderDetails.setProdStatus(prodOrderDetailsDTO.getProdStatus());

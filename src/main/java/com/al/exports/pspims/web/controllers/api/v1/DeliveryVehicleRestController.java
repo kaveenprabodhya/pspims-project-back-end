@@ -1,7 +1,9 @@
 package com.al.exports.pspims.web.controllers.api.v1;
 
 import com.al.exports.pspims.services.DeliveryVehicleService;
+import com.al.exports.pspims.services.ShippingPlanService;
 import com.al.exports.pspims.shared.model.DeliveryVehicleDTO;
+import com.al.exports.pspims.shared.model.ShippingPlanDTO;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
@@ -9,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -25,6 +28,7 @@ public class DeliveryVehicleRestController {
     private final DeliveryVehicleService deliveryVehicleService;
     private static final Integer DEFAULT_PAGE_NUMBER = 0;
     private static final Integer DEFAULT_PAGE_SIZE = 25;
+    private final ShippingPlanService shippingPlanService;
 
     @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @GetMapping
@@ -78,9 +82,19 @@ public class DeliveryVehicleRestController {
 
     @Secured({"ROLE_ADMIN", "ROLE_AGENT"})
     @DeleteMapping({"/{id}"})
-    public ResponseEntity<Void> deleteDeliveryVehicleById(@PathVariable UUID id) {
-        log.warn("Deleting deliveryVehicle with ID: {}", id);
+    public ResponseEntity<?> deleteDeliveryVehicleById(@PathVariable UUID id) {
+        log.warn("Attempting to delete delivery vehicle with ID: {}", id);
+
+        boolean isInUse = shippingPlanService.isDeliveryVehicleInUse(id);
+
+        if (isInUse) {
+            String message = "Cannot delete delivery vehicle because it is assigned to one or more shipping plans.";
+            log.warn(message);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        }
+
         deliveryVehicleService.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().build();
+
     }
 }

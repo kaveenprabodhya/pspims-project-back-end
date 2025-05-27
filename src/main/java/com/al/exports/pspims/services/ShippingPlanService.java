@@ -5,4 +5,5 @@ import com.al.exports.pspims.shared.model.ShippingPlanDTO;
 import java.util.UUID;
 
 public interface ShippingPlanService extends CrudService<ShippingPlanDTO, UUID> {
+    boolean isDeliveryVehicleInUse(UUID vehicleId);
 }

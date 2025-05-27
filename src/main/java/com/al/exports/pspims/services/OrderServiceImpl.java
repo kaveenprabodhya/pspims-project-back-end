@@ -49,7 +49,7 @@ public class OrderServiceImpl implements OrderService {
     public OrderDTO update(UUID id, OrderDTO orderDTO) {
         Order order = orderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found order with id: " + id));
         order.setOrderDate(orderDTO.getOrderDate());
-        order.setOrderStatus(order.getOrderStatus());
+        order.setOrderStatus(orderDTO.getOrderStatus());
         order.setCoconutWaterProdOrder(coconutWaterProdOrderMapper.CoconutWaterProdOrderDtoToCoconutWaterProdOrder(orderDTO.getCoconutWaterProdOrder()));
         order.setVinegarProdOrder(vinegarProdOrderMapper.vinegarProdOrderDtoToVinegarProdOrder(orderDTO.getVinegarProdOrder()));
         order.setBeverageProdOrder(beverageProdOrderMapper.beverageProdOrderDtoToBeverageProdOrder(orderDTO.getBeverageProdOrder()));

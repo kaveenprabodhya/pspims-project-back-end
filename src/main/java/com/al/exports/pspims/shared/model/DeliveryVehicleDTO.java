@@ -16,7 +16,7 @@ import java.math.BigInteger;
 @SuperBuilder
 public class DeliveryVehicleDTO extends BaseItem {
 
-    @NotBlank(message = "Vehicle registration number cannot be blank.")
+    @NotNull(message = "Vehicle registration number cannot be blank.")
     private BigInteger vehicleRegNo;
     @NotNull(message = "Vehicle type cannot be null.")
     private VehicleTypeEnum vehicleType;

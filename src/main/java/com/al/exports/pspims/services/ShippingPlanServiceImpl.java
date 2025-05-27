@@ -91,4 +91,9 @@ public class ShippingPlanServiceImpl implements ShippingPlanService {
         ShippingPlan returnShippingPlan = shippingPlanRepository.save(shippingPlan);
         return shippingPlanMapper.shippingPlanToShippingPlanDTO(returnShippingPlan);
     }
+
+    @Override
+    public boolean isDeliveryVehicleInUse(UUID vehicleId) {
+        return shippingPlanRepository.existsByDeliveryVehicleId(vehicleId);
+    }
 }

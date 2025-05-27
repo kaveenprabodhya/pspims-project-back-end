@@ -20,7 +20,7 @@ public class CopraSaleDTO extends BaseItem {
     private Float pricePerQuantity;
     @Positive(message = "Total sale amount must be a positive number.")
     private Float totalSaleAmount;
-    @PastOrPresent(message = "Sale date cannot be in the future.")
+//    @PastOrPresent(message = "Sale date cannot be in the future.")
     private Date saleDate;
     private CustomerDTO customer;
     private ShippingPlanDTO shippingPlan;

@@ -22,7 +22,7 @@ public class CoconutPurchaseDTO extends BaseItem {
     private Float pricePerUnit;
     @Setter(AccessLevel.NONE)
     private Float totalPurchaseCost;
-    @PastOrPresent(message = "Purchase date cannot be in the future.")
+//    @PastOrPresent(message = "Purchase date cannot be in the future.")
     private Date purchaseDate;
     @NotNull(message = "Coconut quality grade is required.")
     private CoconutQualityGradeEnum coconutQualityGrade;

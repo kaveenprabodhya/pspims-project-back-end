@@ -20,11 +20,11 @@ public class PaymentDetailsDTO extends BaseItem {
 
     @NotNull(message = "Payment status is required.")
     private PaymentStatusEnum paymentStatus;
-    @PastOrPresent(message = "Payment date cannot be in the future.")
+//    @PastOrPresent(message = "Payment date cannot be in the future.")
     private Date paymentDate;
     @Positive(message = "Payment amount must be a positive number.")
     private Float paymentAmount;
-    @NotNull(message = "Invoice number is required.")
+//    @NotNull(message = "Invoice number is required.")
     private BigInteger invoiceNo;
     @NotNull(message = "Payment method cannot be null.")
     private PaymentMethodEnum paymentMethod;
